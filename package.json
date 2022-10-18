@@ -1,0 +1,24 @@
+{
+  "name": "naya-sketch",
+  "version": "1.0.0",
+  "description": "A Collborative Sketch Tool",
+  "scripts": {
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "db": "docker-compose -f database/docker-compose.yml -p naya-sketch-db up --build",
+    "dev": "concurrently \"npm run client\"  \"npm run db\" \"npm run server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ish-u/naya-sketch.git"
+  },
+  "author": "Anmol Gupta | github:ish-u",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ish-u/naya-sketch/issues"
+  },
+  "homepage": "https://github.com/ish-u/naya-sketch#readme",
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  }
+}
