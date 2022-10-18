@@ -1,0 +1,69 @@
+<!-- REF -http://perfectionkills.com/exploring-canvas-drawing-techniques/ -->
+<!-- https://www.html5gamedevs.com/topic/16387-how-to-smooth-a-line-drawn-using-mouse-events/ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://pixijs.download/release/pixi.min.js"></script>
+  </head>
+  <body>
+    <script>
+      // Create the application helper and add its render target to the page
+      const app = new PIXI.Application({
+        width: 500,
+        height: 500,
+        resolution: window.devicePixelRatio || 1,
+        antialias: true,
+        transparent: true,
+      });
+      document.body.appendChild(app.view);
+
+      const graphics = new PIXI.Graphics();
+      graphics.lineStyle(2, 0x000000, 1);
+      graphics.interactive = true;
+
+      var isDrawing = false;
+
+      var prevX = 0;
+      var prevY = 0;
+
+      graphics.on("mousedown", (e) => {
+        isDrawing = true;
+        console.log(isDrawing);
+        prevX = e.data.global.x;
+        prevY = e.data.global.y;
+      });
+      graphics.on("mouseup", (e) => {
+        isDrawing = false;
+        console.log(isDrawing);
+      });
+
+      graphics.on("mousemove", (e) => {
+        if (isDrawing === true && e.data) {
+          if (prevX == e.data.global.x && prevY == e.data.global.y) {
+            isDrawing = false;
+            return;
+          }
+          console.log(isDrawing, e.data.global.x, e.data.global.y);
+          graphics.moveTo(prevX, prevY);
+          graphics.lineTo(e.data.global.x, e.data.global.y);
+          prevX = e.data.global.x;
+          prevY = e.data.global.y;
+        }
+      });
+
+      // Rectangle
+      graphics.beginFill(0xffffff);
+      graphics.drawRect(0, 0, 500, 500);
+      graphics.endFill();
+
+      app.stage.addChild(graphics);
+
+      // Add a ticker callback to move the sprite back and forth
+      let elapsed = 0.0;
+      app.ticker.add((delta) => {
+        elapsed += delta;
+      });
+    </script>
+  </body>
+</html>
