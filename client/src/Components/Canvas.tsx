@@ -1,4 +1,4 @@
-import { Application, Graphics, InteractionEvent, Sprite } from "pixi.js";
+import { Application, Graphics, InteractionEvent } from "pixi.js";
 
 import { useEffect, useState, useRef } from "react";
 
@@ -40,7 +40,7 @@ const Canvas = () => {
 
   // prevY
   const [prevY, _setPrevY] = useState(0);
-  const prevYRef = useRef(prevX);
+  const prevYRef = useRef(prevY);
   function setPrevY(value: number) {
     _setPrevY(value);
     console.log(value);
@@ -152,16 +152,8 @@ const Canvas = () => {
   }, []);
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center">
+    <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center">
       <div ref={ref}></div>
-      <div
-        onClick={() => {
-          console.log(points);
-        }}
-        className="border-2 bg-blue-500/75 hover:bg-blue-500 transition duration-900 cursor-pointer text-white rounded-md text-2xl font-bold m-8 p-2"
-      >
-        Log Points
-      </div>
     </div>
   );
 };
