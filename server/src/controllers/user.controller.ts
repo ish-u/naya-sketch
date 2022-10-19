@@ -23,6 +23,7 @@ export async function registerHandler(
   try {
     const user = await UserModel.findOne({
       username: username,
+      email: email,
     });
     if (user) {
       throw Error("USER DOES EXISTS");
