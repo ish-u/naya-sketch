@@ -1,9 +1,10 @@
-function App() {
+import Canvas from "./Components/Canvas";
+const App = () => {
   return (
-    <div className="m-32 text-center">
-      <div className="text-4xl font-mono ">naya-sketch</div>
+    <div className="">
+      <Canvas />
     </div>
   );
-}
+};
 
 export default App;
