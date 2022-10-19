@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 async function connect() {
   try {
     await mongoose.connect(process.env.DB_URI || "", {
-      dbName: "naya-sketch-db",
+      dbName: process.env.DB_NAME,
     });
     console.log("CONNECTED TO DB");
   } catch (err) {

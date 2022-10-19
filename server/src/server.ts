@@ -33,6 +33,7 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.DB_URI || "",
+      dbName: process.env.DB_NAME,
     }),
     proxy: true,
     cookie: {
