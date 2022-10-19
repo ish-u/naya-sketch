@@ -2,11 +2,24 @@ import { Application, Graphics, InteractionEvent, Sprite } from "pixi.js";
 
 import { useEffect, useState, useRef } from "react";
 
+import pointsJSON from "../assets/sample.json";
+
 const Canvas = () => {
   // ref to canvas
   const ref = useRef<HTMLDivElement | null>(null);
   const graphicsRef = useRef<Graphics>();
   const appRef = useRef<Application>();
+
+  // Drawing
+  const [points, setPoints] = useState<
+    {
+      x1: number;
+      x2: number;
+      y1: number;
+      y2: number;
+    }[]
+  >(pointsJSON.points);
+
   // isDrawing
   const [isDrawing, _setIsDrawing] = useState(false);
   const isDrawingRef = useRef(isDrawing);
@@ -45,6 +58,15 @@ const Canvas = () => {
         setIsDrawing(false);
         return;
       }
+      const points = {
+        x1: prevXRef.current,
+        y1: prevYRef.current,
+        x2: e.data.global.x,
+        y2: e.data.global.y,
+      };
+      setPoints((prev) => {
+        return [...prev, points];
+      });
       graphics.moveTo(prevXRef.current, prevYRef.current);
       graphics.lineTo(e.data.global.x, e.data.global.y);
       setPrevX(e.data.global.x);
@@ -64,13 +86,14 @@ const Canvas = () => {
     // console.log("DOWN", isDrawingRef.current);
   };
 
-  const extractData = () => {
-    const image = appRef.current?.renderer.plugins.extract.image(
-      graphicsRef.current
-    );
-    console.log(image);
-    document.body.appendChild(image);
-    // setImage(image);
+  const loadSketch = () => {
+    if (points) {
+      for (var i = 0; i < points.length; i++) {
+        graphicsRef.current?.lineStyle(2, 0x000000, 1);
+        graphicsRef.current?.moveTo(points[i].x1, points[i].y1);
+        graphicsRef.current?.lineTo(points[i].x2, points[i].y2);
+      }
+    }
   };
 
   useEffect(() => {
@@ -118,6 +141,8 @@ const Canvas = () => {
       graphicsRef.current = graphics;
       appRef.current = app;
 
+      loadSketch();
+
       return () => {
         // On unload completely destroy the application and all of it's children
         console.log("DESTROYED");
@@ -131,11 +156,11 @@ const Canvas = () => {
       <div ref={ref}></div>
       <div
         onClick={() => {
-          extractData();
+          console.log(points);
         }}
         className="border-2 bg-blue-500/75 hover:bg-blue-500 transition duration-900 cursor-pointer text-white rounded-md text-2xl font-bold m-8 p-2"
       >
-        Extract Data
+        Log Points
       </div>
     </div>
   );
