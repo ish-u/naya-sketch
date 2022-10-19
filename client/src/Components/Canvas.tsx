@@ -152,10 +152,11 @@ const Canvas = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center">
+    <div className="fixed top-0 left-0 -z-10 w-screen h-screen flex flex-col justify-center items-center">
       <div ref={ref}></div>
     </div>
   );
 };
 
 export default Canvas;
+  
