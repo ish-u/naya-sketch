@@ -27,7 +27,7 @@ const Login = ({
   };
 
   return (
-    <div className="">
+    <div className="w-80">
       <div className="mb-4 text-4xl font-semibold text-[#4F00C1]">
         Log in to continue
       </div>
@@ -60,7 +60,7 @@ const Login = ({
           Sign Up
         </span>
       </div>
-      <div className="text-center font-semibold text-[#424242]">or</div>
+      <div className="my-4 text-center font-semibold text-[#424242]">or</div>
       <div
         className="h-10 py-6 rounded-md flex justify-center items-center border-2 text-base font-semibold hover:bg-black/10 hover:cursor-pointer
                       transition duration-300"
