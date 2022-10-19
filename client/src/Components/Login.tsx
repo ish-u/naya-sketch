@@ -2,8 +2,10 @@ import { useState } from "react";
 import google from "../assets/google.svg";
 const Login = ({
   setIsAuthenticated,
+  setCurrent,
 }: {
   setIsAuthenticated: (value: boolean) => void;
+  setCurrent: (value: "login" | "register") => void;
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,7 +58,10 @@ const Login = ({
       </div>
       <div className="my-4 text-center text-sm">
         Don't have an account?{" "}
-        <span className="text-[#4F00C1] hover:underline hover:cursor-pointer">
+        <span
+          onClick={() => setCurrent("register")}
+          className="text-[#4F00C1] hover:underline hover:cursor-pointer"
+        >
           Sign Up
         </span>
       </div>
