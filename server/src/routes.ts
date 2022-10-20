@@ -8,6 +8,11 @@ import {
   loginHandler,
   logoutHandler,
 } from "./controllers/user.controller";
+import {
+  sketchDataHandler,
+  createSketchHandler,
+  getSketchDataHandler,
+} from "./controllers/sketch.controller";
 
 function routes(app: Express) {
   app.get("/", indexHandler);
@@ -18,6 +23,11 @@ function routes(app: Express) {
   app.post("/login", passport.authenticate("local"), loginHandler);
   app.post("/register", registerHandler);
   app.get("/logout", authenticate, logoutHandler);
+
+  // SKETCH
+  app.put("/sketch/update", authenticate, sketchDataHandler);
+  app.get("/sketch/create/:name", authenticate, createSketchHandler);
+  app.get("/sketch/get/:name", authenticate, getSketchDataHandler);
 }
 
 export default routes;
