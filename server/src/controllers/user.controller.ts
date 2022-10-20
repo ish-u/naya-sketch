@@ -66,5 +66,6 @@ export async function checkSessionHandler(
   res: Response,
   next: NextFunction
 ) {
-  res.status(201).send();
+  const username = (req.user as { username: string }).username;
+  res.status(201).json({ username });
 }
