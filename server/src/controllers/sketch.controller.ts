@@ -4,6 +4,7 @@ import SketchModel from "../models/sketch.model";
 export async function sketchDataHandler(req: Request, res: Response) {
   const data = req.body.data;
   const name = req.body.name;
+  const username = (req.user as { username: string }).username;
 
   try {
     // checking if the sketch exists
@@ -11,10 +12,19 @@ export async function sketchDataHandler(req: Request, res: Response) {
     if (!sketch) {
       throw new Error("SKETCH DOES NOT EXIST");
     }
-    console.log(sketch?.data.length);
 
     // updating the data array of SketchModel
-    sketch.data = [...sketch.data, ...data];
+    sketch.data = [...sketch.data, data];
+    var collaboraterExists = false;
+    for (var i = 0; i < sketch.collaboraters.length; i++) {
+      if (sketch.collaboraters[i] === username) {
+        collaboraterExists = true;
+        break;
+      }
+    }
+    if (!collaboraterExists) {
+      sketch.collaboraters = [...sketch.collaboraters, username];
+    }
 
     // saving the updated document
     await sketch.save();
@@ -64,8 +74,9 @@ export async function getSketchDataHandler(req: Request, res: Response) {
 
     // getting the data array and sending it to user
     const data = sketch.data;
+    const collaboraters = sketch.collaboraters;
 
-    res.status(200).json({ points: data });
+    res.status(200).json({ data, collaboraters });
   } catch (error) {
     console.log(error);
     res.status(404).json({ error: error });
