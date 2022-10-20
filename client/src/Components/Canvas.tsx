@@ -2,7 +2,7 @@ import { Application, Graphics, InteractionEvent } from "pixi.js";
 
 import { useEffect, useState, useRef } from "react";
 
-import pointsJSON from "../assets/sample.json";
+//import pointsJSON from "../assets/sample.json";
 
 const Canvas = () => {
   // ref to canvas
@@ -11,21 +11,33 @@ const Canvas = () => {
   const appRef = useRef<Application>();
 
   // Drawing
-  const [points, setPoints] = useState<
+  const [points, _setPoints] = useState<
     {
       x1: number;
       x2: number;
       y1: number;
       y2: number;
     }[]
-  >(pointsJSON.points);
+  >([]);
+  const pointsRef = useRef(points);
+  function setPoints(value: {
+    x1: number;
+    x2: number;
+    y1: number;
+    y2: number;
+  }) {
+    _setPoints((prev) => {
+      return [...prev, value];
+    });
+    pointsRef.current = [...pointsRef.current, value];
+  }
 
   // isDrawing
   const [isDrawing, _setIsDrawing] = useState(false);
   const isDrawingRef = useRef(isDrawing);
   function setIsDrawing(value: boolean) {
     _setIsDrawing(value);
-    console.log(value);
+    // console.log(value);
     isDrawingRef.current = value;
   }
 
@@ -34,7 +46,7 @@ const Canvas = () => {
   const prevXRef = useRef(prevX);
   function setPrevX(value: number) {
     _setPrevX(value);
-    console.log(value);
+    // console.log(value);
     prevXRef.current = value;
   }
 
@@ -43,7 +55,7 @@ const Canvas = () => {
   const prevYRef = useRef(prevY);
   function setPrevY(value: number) {
     _setPrevY(value);
-    console.log(value);
+    // console.log(value);
     prevYRef.current = value;
   }
 
@@ -64,9 +76,7 @@ const Canvas = () => {
         x2: e.data.global.x,
         y2: e.data.global.y,
       };
-      setPoints((prev) => {
-        return [...prev, points];
-      });
+      setPoints(points);
       graphics.moveTo(prevXRef.current, prevYRef.current);
       graphics.lineTo(e.data.global.x, e.data.global.y);
       setPrevX(e.data.global.x);
@@ -81,19 +91,49 @@ const Canvas = () => {
     // console.log("UP", isDrawingRef.current);
   };
 
-  const mouseupHandler = () => {
+  const mouseupHandler = async () => {
     setIsDrawing(false);
     // console.log("DOWN", isDrawingRef.current);
+    await sendData(pointsRef.current);
   };
 
-  const loadSketch = () => {
-    if (points) {
-      for (var i = 0; i < points.length; i++) {
+  const loadSketch = async () => {
+    const res = await fetch(
+      import.meta.env.VITE_APP_API + "/sketch/get/sketch1",
+      { credentials: "include" }
+    );
+    const data = await res.json();
+    const sketchPoints = data.points;
+    if (sketchPoints) {
+      for (var i = 0; i < sketchPoints.length; i++) {
         graphicsRef.current?.lineStyle(2, 0x000000, 1);
-        graphicsRef.current?.moveTo(points[i].x1, points[i].y1);
-        graphicsRef.current?.lineTo(points[i].x2, points[i].y2);
+        graphicsRef.current?.moveTo(sketchPoints[i].x1, sketchPoints[i].y1);
+        graphicsRef.current?.lineTo(sketchPoints[i].x2, sketchPoints[i].y2);
       }
     }
+  };
+
+  // send data
+  const sendData = async (
+    pointsToSend: {
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+    }[]
+  ) => {
+    const res = await fetch(import.meta.env.VITE_APP_API + "/sketch/update", {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        data: pointsToSend,
+        name: "sketch1",
+      }),
+      credentials: "include",
+    });
+    console.log(res.status);
   };
 
   useEffect(() => {
@@ -159,4 +199,3 @@ const Canvas = () => {
 };
 
 export default Canvas;
-  
