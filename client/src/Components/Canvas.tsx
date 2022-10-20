@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 
 //import pointsJSON from "../assets/sample.json";
 
-const Canvas = () => {
+const Canvas = ({ currentSketch }: { currentSketch: string }) => {
   // ref to canvas
   const ref = useRef<HTMLDivElement | null>(null);
   const graphicsRef = useRef<Graphics>();
@@ -98,8 +98,10 @@ const Canvas = () => {
   };
 
   const loadSketch = async () => {
+    _setPoints([]);
+    pointsRef.current = [];
     const res = await fetch(
-      import.meta.env.VITE_APP_API + "/sketch/get/sketch1",
+      import.meta.env.VITE_APP_API + "/sketch/get/" + currentSketch,
       { credentials: "include" }
     );
     const data = await res.json();
@@ -129,7 +131,7 @@ const Canvas = () => {
       },
       body: JSON.stringify({
         data: pointsToSend,
-        name: "sketch1",
+        name: currentSketch,
       }),
       credentials: "include",
     });
@@ -137,7 +139,6 @@ const Canvas = () => {
   };
 
   useEffect(() => {
-    console.log("EFFECT", appRef.current !== null);
     if (appRef.current !== null) {
       // On first render create our application
       const app = new Application({
@@ -189,7 +190,7 @@ const Canvas = () => {
         app.destroy(true, true);
       };
     }
-  }, []);
+  }, [currentSketch]);
 
   return (
     <div className="fixed top-0 left-0 -z-10 w-screen h-screen flex flex-col justify-center items-center">

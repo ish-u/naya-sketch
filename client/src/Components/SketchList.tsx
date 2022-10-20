@@ -1,7 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const SketchesList = () => {
-  const [showList, setShowList] = useState(false);
+const SketchesList = ({
+  currentSketch,
+  setCurrentSketch,
+}: {
+  currentSketch: string;
+  setCurrentSketch: (value: string) => void;
+}) => {
+  const [showList, setShowList] = useState(true);
+  const [list, setList] = useState<string[] | null>(null);
+
+  const getSketchListHandler = async () => {
+    const res = await fetch(import.meta.env.VITE_APP_API + "/sketch/list", {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await res.json();
+    setList(data.sketches);
+  };
+
+  const createNewSketchHandler = async () => {
+    const number =
+      list?.length && list !== null
+        ? parseInt(list[list.length - 1].split(" ")[1]) + 1
+        : 1;
+    const res = await fetch(
+      import.meta.env.VITE_APP_API + "/sketch/create/Sketch " + number,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+    setList((prev) => (prev !== null ? [...prev, data.name] : [data.name]));
+  };
+
+  useEffect(() => {
+    if (list === null) {
+      getSketchListHandler();
+    }
+  }, []);
 
   return (
     <div className="w-72 border rounded-md bg-white p-2 my-2">
@@ -31,12 +69,24 @@ const SketchesList = () => {
         <>
           <hr />
           <div className="my-2">
-            <div className="h-8 m-2 flex items-center">Sketch 1</div>
-            <div className="h-8 m-2 flex items-center">Sketch 2</div>
-            <div className="h-8 m-2 flex items-center">Sketch 3</div>
+            {list !== null &&
+              list.map((sketch) => (
+                <div
+                  onClick={() => setCurrentSketch(sketch)}
+                  key={sketch}
+                  className={`h-8 m-2 flex items-center ${
+                    sketch === currentSketch ? "text-[#4F00C1]" : ""
+                  }`}
+                >
+                  {sketch}
+                </div>
+              ))}
           </div>
-          <div className="my-4 flex items-center">
-            <div className="mx-2 borde">
+          <div
+            onClick={createNewSketchHandler}
+            className="my-4 flex items-center"
+          >
+            <div className="mx-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
