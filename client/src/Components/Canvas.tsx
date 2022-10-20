@@ -4,11 +4,20 @@ import { useEffect, useState, useRef } from "react";
 
 //import pointsJSON from "../assets/sample.json";
 
-const Canvas = ({ currentSketch }: { currentSketch: string }) => {
+const Canvas = ({
+  currentSketch,
+  username,
+}: {
+  currentSketch: string;
+  username: string;
+}) => {
   // ref to canvas
   const ref = useRef<HTMLDivElement | null>(null);
   const graphicsRef = useRef<Graphics>();
   const appRef = useRef<Application>();
+  const [collaboraters, setCollaboraters] = useState<Record<string, string>>(
+    {}
+  );
 
   // Drawing
   const [points, _setPoints] = useState<
@@ -77,6 +86,7 @@ const Canvas = ({ currentSketch }: { currentSketch: string }) => {
         y2: e.data.global.y,
       };
       setPoints(points);
+      graphics.lineStyle(2, parseInt("0x" + collaboraters[username]), 1);
       graphics.moveTo(prevXRef.current, prevYRef.current);
       graphics.lineTo(e.data.global.x, e.data.global.y);
       setPrevX(e.data.global.x);
@@ -97,6 +107,7 @@ const Canvas = ({ currentSketch }: { currentSketch: string }) => {
     await sendData(pointsRef.current);
   };
 
+  // loading the saved Sketch
   const loadSketch = async () => {
     _setPoints([]);
     pointsRef.current = [];
@@ -104,13 +115,51 @@ const Canvas = ({ currentSketch }: { currentSketch: string }) => {
       import.meta.env.VITE_APP_API + "/sketch/get/" + currentSketch,
       { credentials: "include" }
     );
-    const data = await res.json();
-    const sketchPoints = data.points;
-    if (sketchPoints) {
-      for (var i = 0; i < sketchPoints.length; i++) {
-        graphicsRef.current?.lineStyle(2, 0x000000, 1);
-        graphicsRef.current?.moveTo(sketchPoints[i].x1, sketchPoints[i].y1);
-        graphicsRef.current?.lineTo(sketchPoints[i].x2, sketchPoints[i].y2);
+    if (res.status !== 404) {
+      const data = await res.json();
+      const pointsData: {
+        points: {
+          x1: number;
+          y1: number;
+          x2: number;
+          y2: number;
+          sketchedBy: string;
+        }[];
+        sketchedBy: string;
+      }[] = data.data;
+      const sketchCollaboraters: string[] = data.collaboraters;
+      var sketchPoints: {
+        x1: number;
+        y1: number;
+        x2: number;
+        y2: number;
+        sketchedBy: string;
+      }[] = [];
+      sketchCollaboraters.map(
+        (collaborater) =>
+          (collaboraters[collaborater] = Math.floor(
+            Math.random() * 16777215
+          ).toString(16))
+      );
+      pointsData.map(
+        (points) =>
+          (sketchPoints = [
+            ...sketchPoints,
+            ...points.points.map((point) => {
+              return { ...point, sketchedBy: points.sketchedBy };
+            }),
+          ])
+      );
+      if (sketchPoints) {
+        for (var i = 0; i < sketchPoints.length; i++) {
+          graphicsRef.current?.lineStyle(
+            2,
+            parseInt("0x" + collaboraters[sketchPoints[i].sketchedBy]),
+            1
+          );
+          graphicsRef.current?.moveTo(sketchPoints[i].x1, sketchPoints[i].y1);
+          graphicsRef.current?.lineTo(sketchPoints[i].x2, sketchPoints[i].y2);
+        }
       }
     }
   };
@@ -130,7 +179,7 @@ const Canvas = ({ currentSketch }: { currentSketch: string }) => {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        data: pointsToSend,
+        data: { points: pointsToSend, sketchedBy: username },
         name: currentSketch,
       }),
       credentials: "include",

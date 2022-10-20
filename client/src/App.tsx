@@ -4,14 +4,17 @@ import AuthPage from "./Pages/AuthPage";
 import SketchPage from "./Pages/SketchPage";
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const check = await fetch(import.meta.env.VITE_APP_API + "/check", {
+      const res = await fetch(import.meta.env.VITE_APP_API + "/check", {
         credentials: "include",
       });
-      if (check.status === 201) {
+      if (res.status === 201) {
+        const username = (await res.json()).username;
+        setCurrentUser(username);
         setIsAuthenticated(true);
       }
       setLoading(false);
@@ -24,7 +27,7 @@ const App = () => {
     return (
       <>
         <NavBar />
-        <SketchPage />
+        <SketchPage username={currentUser} />
       </>
     );
   } else {
