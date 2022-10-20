@@ -12,6 +12,7 @@ import {
   sketchDataHandler,
   createSketchHandler,
   getSketchDataHandler,
+  getSkechListHandler,
 } from "./controllers/sketch.controller";
 
 function routes(app: Express) {
@@ -28,6 +29,7 @@ function routes(app: Express) {
   app.put("/sketch/update", authenticate, sketchDataHandler);
   app.get("/sketch/create/:name", authenticate, createSketchHandler);
   app.get("/sketch/get/:name", authenticate, getSketchDataHandler);
+  app.get("/sketch/list", authenticate, getSkechListHandler);
 }
 
 export default routes;

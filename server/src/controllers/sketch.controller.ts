@@ -71,3 +71,16 @@ export async function getSketchDataHandler(req: Request, res: Response) {
     res.status(404).json({ error: error });
   }
 }
+
+export async function getSkechListHandler(req: Request, res: Response) {
+  try {
+    // getting the list of all sketch
+    const sketches = (await SketchModel.find().select({ _id: 0, name: 1 })).map(
+      (sketch) => sketch.name
+    );
+    res.status(200).json({ sketches });
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({ error: error });
+  }
+}
