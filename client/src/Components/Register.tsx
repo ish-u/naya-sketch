@@ -1,9 +1,10 @@
 import { useState } from "react";
-
 const Register = ({
   setCurrent,
+  showMessageHandler,
 }: {
   setCurrent: (value: "login" | "register") => void;
+  showMessageHandler: (value: string) => void;
 }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +27,9 @@ const Register = ({
     const status = res.status;
     if (status === 201) {
       setCurrent("login");
+      showMessageHandler("registered successfully");
+    } else {
+      showMessageHandler("somethng went wrong");
     }
   };
 
@@ -61,12 +65,16 @@ const Register = ({
       <div className="my-4 text-center font-semibold text-sm text-[#4F00C1] hover:underline hover:cursor-pointer">
         Forgot Password ?
       </div>
-      <div
+      <button
         onClick={registerHandler}
-        className="h-10 py-6 rounded-md bg-[#4F00C1] flex flex-col justify-center items-center text-lg font-semibold text-white hover:cursor-pointer"
+        className="w-full h-10 py-6 rounded-md bg-[#4F00C1]/90 hover:bg-[#4F00C1] flex flex-col justify-center items-center
+                  text-lg font-semibold text-white hover:cursor-pointer disabled:bg-[#4F00C1]/50"
+        disabled={
+          email === "" || name === "" || password === "" || username === ""
+        }
       >
         <div>Register</div>
-      </div>
+      </button>
       <div className="my-4 text-center text-sm">
         Already have an account?{" "}
         <span

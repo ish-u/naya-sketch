@@ -4,11 +4,12 @@ import { ActionType } from "../context/actions";
 import { AppContext } from "../context/context";
 const Login = ({
   setCurrent,
+  showMessageHandler,
 }: {
   setCurrent: (value: "login" | "register") => void;
+  showMessageHandler: (value: string) => void;
 }) => {
-  const { state, dispatch } = useContext(AppContext);
-
+  const { dispatch } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,6 +37,8 @@ const Login = ({
         type: ActionType.SetIsAuthenticated,
         payload: { value: true },
       });
+    } else {
+      showMessageHandler("Invalid Credentials");
     }
   };
 
@@ -61,12 +64,14 @@ const Login = ({
       <div className="my-4 text-center font-semibold text-sm text-[#4F00C1] hover:underline hover:cursor-pointer">
         Forgot Password ?
       </div>
-      <div
+      <button
         onClick={loginHandler}
-        className="h-10 py-6 rounded-md bg-[#4F00C1] flex flex-col justify-center items-center text-lg font-semibold text-white hover:cursor-pointer"
+        className="w-full h-10 py-6 rounded-md bg-[#4F00C1]/90 hover:bg-[#4F00C1] flex flex-col justify-center items-center 
+                   text-lg font-semibold text-white hover:cursor-pointer transition duration-150 disabled:bg-[#4F00C1]/50"
+        disabled={email === "" || password === ""}
       >
         <div>Login</div>
-      </div>
+      </button>
       <div className="my-4 text-center text-sm">
         Don't have an account?{" "}
         <span
