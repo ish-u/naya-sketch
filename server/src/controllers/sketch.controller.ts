@@ -75,8 +75,8 @@ export async function getSketchDataHandler(req: Request, res: Response) {
     // getting the data array and sending it to user
     const data = sketch.data;
     const collaboraters = sketch.collaboraters;
-
-    res.status(200).json({ data, collaboraters });
+    const owner = sketch.owner;
+    res.status(200).json({ data, collaboraters, owner });
   } catch (error) {
     console.log(error);
     res.status(404).json({ error: error });
