@@ -18,12 +18,13 @@ export async function registerHandler(req: Request, res: Response) {
   const name: string = req.body.name;
 
   try {
-    const user = await UserModel.findOne({
-      username: username,
-      email: email,
-    });
-    if (user) {
-      throw Error("USER DOES EXISTS");
+    // checking if the sent credentials exists ot not
+    const user = await UserModel.find().or([
+      { username: username },
+      { email: email },
+    ]);
+    if (user.length) {
+      throw Error("USER EXISTS");
     }
 
     // creating hashed password
