@@ -32,7 +32,7 @@ const App = () => {
     return <>Loading</>;
   } else if (state.isAuthenticated) {
     return (
-      <div className="w-screen h-screen bg-[#F5F5F5]">
+      <div className="fixed -z-20 w-screen h-screen bg-[#F5F5F5]">
         <NavBar />
         <SketchPage />
       </div>
