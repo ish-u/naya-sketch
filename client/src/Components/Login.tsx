@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import google from "../assets/google.svg";
+import { ActionType } from "../context/actions";
+import { AppContext } from "../context/context";
 const Login = ({
-  setIsAuthenticated,
   setCurrent,
 }: {
-  setIsAuthenticated: (value: boolean) => void;
   setCurrent: (value: "login" | "register") => void;
 }) => {
+  const { state, dispatch } = useContext(AppContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,7 +26,16 @@ const Login = ({
     });
     const status = res.status;
     if (status === 201) {
-      setIsAuthenticated(true);
+      const user = (await res.json()).user;
+      console.log(user);
+      dispatch({
+        type: ActionType.SetUser,
+        payload: user,
+      });
+      dispatch({
+        type: ActionType.SetIsAuthenticated,
+        payload: { value: true },
+      });
     }
   };
 

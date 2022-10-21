@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ActionType } from "../context/actions";
+import { AppContext } from "../context/context";
 
-const SketchesList = ({
-  currentSketch,
-  setCurrentSketch,
-}: {
-  currentSketch: string;
-  setCurrentSketch: (value: string) => void;
-}) => {
+const SketchesList = () => {
+  // context
+  const { state, dispatch } = useContext(AppContext);
+
   const [showList, setShowList] = useState(true);
   const [list, setList] = useState<string[] | null>(null);
 
@@ -72,10 +71,15 @@ const SketchesList = ({
             {list !== null &&
               list.map((sketch) => (
                 <div
-                  onClick={() => setCurrentSketch(sketch)}
+                  onClick={() =>
+                    dispatch({
+                      type: ActionType.ChangeCureentSketch,
+                      payload: { currentSketch: sketch },
+                    })
+                  }
                   key={sketch}
                   className={`h-8 m-2 flex items-center ${
-                    sketch === currentSketch ? "text-[#4F00C1]" : ""
+                    sketch === state.currentSketch ? "text-[#4F00C1]" : ""
                   }`}
                 >
                   {sketch}

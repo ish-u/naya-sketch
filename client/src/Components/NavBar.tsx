@@ -1,5 +1,9 @@
+import { useContext } from "react";
 import logo from "../assets/naya.svg";
+import { AppContext } from "../context/context";
 const NavBar = () => {
+  const { state } = useContext(AppContext);
+
   const logoutHandler = async () => {
     console.log("LOGOUT");
     await fetch(import.meta.env.VITE_APP_API + "/logout", {
@@ -8,28 +12,22 @@ const NavBar = () => {
     location.reload();
   };
   return (
-    <div className="w-screen h-14 bg-slate-300 flex justify-between">
+    <div className="w-screen border-b-2 h-14 flex justify-between">
       <div className="h-full flex flex-col justify-center mx-4">
         <img src={logo}></img>
       </div>
       <div className="flex mx-4 items-center">
-        <div className="mx-2 font-semibold">John Doe</div>
-        <div className="mx-2 p-1 border-2 border-black rounded-full hover:cursor-pointer hover:bg-white hover:text-black duration-150 transition">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-            />
-          </svg>
+        <div className="mx-2">
+          <span className="font-semibold">@{state.user?.username}</span>
+          {"/"}
+          {state.user?.name}
         </div>
+        <img
+          className="mx-2 border-black rounded-full"
+          height={36}
+          width={36}
+          src={`https://www.gravatar.com/avatar/${state.user?.username}?s=64&d=identicon&r=PG`}
+        />
         <div
           onClick={logoutHandler}
           className="mx-2 p-1 border-2 border-black rounded-full hover:cursor-pointer hover:bg-white hover:text-black duration-150 transition"

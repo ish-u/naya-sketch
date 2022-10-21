@@ -1,24 +1,21 @@
 import { Application, Graphics, InteractionEvent } from "pixi.js";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
+import { ActionType } from "../context/actions";
+import { AppContext } from "../context/context";
 
 //import pointsJSON from "../assets/sample.json";
 
-const Canvas = ({
-  currentSketch,
-  username,
-}: {
-  currentSketch: string;
-  username: string;
-}) => {
+const Canvas = () => {
+  // context
+  const { state, dispatch } = useContext(AppContext);
   // ref to canvas
   const ref = useRef<HTMLDivElement | null>(null);
-  const graphicsRef = useRef<Graphics>();
-  const appRef = useRef<Application>();
+  const graphicsRef = useRef<Graphics | null>(null);
+  const appRef = useRef<Application | null>(null);
   const [collaboraters, setCollaboraters] = useState<Record<string, string>>(
     {}
   );
-
   // Drawing
   const [points, _setPoints] = useState<
     {
@@ -46,7 +43,6 @@ const Canvas = ({
   const isDrawingRef = useRef(isDrawing);
   function setIsDrawing(value: boolean) {
     _setIsDrawing(value);
-    // console.log(value);
     isDrawingRef.current = value;
   }
 
@@ -55,7 +51,6 @@ const Canvas = ({
   const prevXRef = useRef(prevX);
   function setPrevX(value: number) {
     _setPrevX(value);
-    // console.log(value);
     prevXRef.current = value;
   }
 
@@ -64,21 +59,12 @@ const Canvas = ({
   const prevYRef = useRef(prevY);
   function setPrevY(value: number) {
     _setPrevY(value);
-    // console.log(value);
     prevYRef.current = value;
   }
 
   // Handlers
-  const movemouseHandler = (e: InteractionEvent, graphics: Graphics) => {
-    // console.log(isDrawingRef.current);
+  const mousemoveHandler = (e: InteractionEvent) => {
     if (isDrawingRef.current === true) {
-      if (
-        prevXRef.current === e.data.global.x &&
-        prevYRef.current === e.data.global.y
-      ) {
-        setIsDrawing(false);
-        return;
-      }
       const points = {
         x1: prevXRef.current,
         y1: prevYRef.current,
@@ -86,25 +72,43 @@ const Canvas = ({
         y2: e.data.global.y,
       };
       setPoints(points);
-      graphics.lineStyle(2, parseInt("0x" + collaboraters[username]), 1);
-      graphics.moveTo(prevXRef.current, prevYRef.current);
-      graphics.lineTo(e.data.global.x, e.data.global.y);
+      graphicsRef.current?.lineStyle(
+        2,
+        state.user
+          ? parseInt("0x" + state.collaboraters[state.user?.username])
+          : 0xffffff,
+        1
+      );
+      graphicsRef.current?.moveTo(prevXRef.current, prevYRef.current);
+      graphicsRef.current?.lineTo(e.data.global.x, e.data.global.y);
       setPrevX(e.data.global.x);
       setPrevY(e.data.global.y);
     }
   };
 
   const mousedownHandler = (e: InteractionEvent) => {
+    // adding the current user as collaboraters if it's their first time drawing
+    if (state.user && !collaboraters[state.user?.username]) {
+      collaboraters[state.user?.username] = Math.floor(
+        Math.random() * 16777215
+      ).toString(16);
+      dispatch({
+        type: ActionType.SetCollaboraters,
+        payload: {
+          collaborater: state.user?.username,
+          color: collaboraters[state.user?.username],
+        },
+      });
+    }
     setIsDrawing(true);
     setPrevX(e.data.global.x);
     setPrevY(e.data.global.y);
-    // console.log("UP", isDrawingRef.current);
   };
 
   const mouseupHandler = async () => {
     setIsDrawing(false);
-    // console.log("DOWN", isDrawingRef.current);
-    await sendData(pointsRef.current);
+    sendData(pointsRef.current);
+    pointsRef.current = [];
   };
 
   // loading the saved Sketch
@@ -112,7 +116,7 @@ const Canvas = ({
     _setPoints([]);
     pointsRef.current = [];
     const res = await fetch(
-      import.meta.env.VITE_APP_API + "/sketch/get/" + currentSketch,
+      import.meta.env.VITE_APP_API + "/sketch/get/" + state.currentSketch,
       { credentials: "include" }
     );
     if (res.status !== 404) {
@@ -123,11 +127,13 @@ const Canvas = ({
           y1: number;
           x2: number;
           y2: number;
+
           sketchedBy: string;
         }[];
         sketchedBy: string;
       }[] = data.data;
       const sketchCollaboraters: string[] = data.collaboraters;
+      const owner = data.owner;
       var sketchPoints: {
         x1: number;
         y1: number;
@@ -135,12 +141,33 @@ const Canvas = ({
         y2: number;
         sketchedBy: string;
       }[] = [];
-      sketchCollaboraters.map(
-        (collaborater) =>
-          (collaboraters[collaborater] = Math.floor(
+
+      // owner
+      collaboraters[owner] = Math.floor(Math.random() * 16777215).toString(16);
+      dispatch({
+        type: ActionType.SetCollaboraters,
+        payload: {
+          collaborater: owner,
+          color: collaboraters[owner],
+        },
+      });
+
+      for (var i = 0; i < sketchCollaboraters.length; i++) {
+        if (sketchCollaboraters[i] !== owner) {
+          collaboraters[sketchCollaboraters[i]] = Math.floor(
             Math.random() * 16777215
-          ).toString(16))
-      );
+          ).toString(16);
+
+          dispatch({
+            type: ActionType.SetCollaboraters,
+            payload: {
+              collaborater: sketchCollaboraters[i],
+              color: collaboraters[sketchCollaboraters[i]],
+            },
+          });
+        }
+      }
+
       pointsData.map(
         (points) =>
           (sketchPoints = [
@@ -164,7 +191,6 @@ const Canvas = ({
     }
   };
 
-  // send data
   const sendData = async (
     pointsToSend: {
       x1: number;
@@ -179,8 +205,8 @@ const Canvas = ({
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        data: { points: pointsToSend, sketchedBy: username },
-        name: currentSketch,
+        data: { points: pointsToSend, sketchedBy: state.user?.username },
+        name: state.currentSketch,
       }),
       credentials: "include",
     });
@@ -188,7 +214,7 @@ const Canvas = ({
   };
 
   useEffect(() => {
-    if (appRef.current !== null) {
+    if (state.currentSketch !== "") {
       // On first render create our application
       const app = new Application({
         width: window.innerWidth - 200,
@@ -202,7 +228,6 @@ const Canvas = ({
 
       // Initialize  Graphics
       const graphics = new Graphics();
-      graphics.lineStyle(2, 0x000000, 1);
       graphics.interactive = true;
 
       // Rectangle Object on which User can Draw
@@ -218,9 +243,7 @@ const Canvas = ({
       // Graphics Event Listeners
       graphics.on("mousedown", mousedownHandler);
       graphics.on("mouseup", mouseupHandler);
-      graphics.on("mousemove", (e: InteractionEvent) => {
-        movemouseHandler(e, graphics);
-      });
+      graphics.on("mousemove", mousemoveHandler);
 
       // Adding graphics to App
       app.stage.addChild(graphics);
@@ -239,11 +262,14 @@ const Canvas = ({
         app.destroy(true, true);
       };
     }
-  }, [currentSketch]);
+  }, [state.currentSketch]);
 
   return (
     <div className="fixed top-0 left-0 -z-10 w-screen h-screen flex flex-col justify-center items-center">
-      <div ref={ref}></div>
+      <div className="border-4" ref={ref}></div>
+      {appRef.current === null && (
+        <div className="text-4xl font-semibold"> Chooose a Sketch </div>
+      )}
     </div>
   );
 };

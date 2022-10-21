@@ -1,21 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NavBar from "./Components/NavBar";
+import { ActionType } from "./context/actions";
+import { AppContext } from "./context/context";
 import AuthPage from "./Pages/AuthPage";
 import SketchPage from "./Pages/SketchPage";
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState("");
+  const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(import.meta.env.VITE_APP_API + "/check", {
+      const res = await fetch(import.meta.env.VITE_APP_API + "/user", {
         credentials: "include",
       });
       if (res.status === 201) {
-        const username = (await res.json()).username;
-        setCurrentUser(username);
-        setIsAuthenticated(true);
+        const user = (await res.json()).user;
+        dispatch({
+          type: ActionType.SetUser,
+          payload: user,
+        });
+        dispatch({
+          type: ActionType.SetIsAuthenticated,
+          payload: { value: true },
+        });
       }
       setLoading(false);
     })();
@@ -23,17 +30,17 @@ const App = () => {
 
   if (loading) {
     return <>Loading</>;
-  } else if (isAuthenticated) {
+  } else if (state.isAuthenticated) {
     return (
-      <>
+      <div className="bg-[#F5F5F5]">
         <NavBar />
-        <SketchPage username={currentUser} />
-      </>
+        <SketchPage />
+      </div>
     );
   } else {
     return (
       <>
-        <AuthPage setIsAuthenticated={setIsAuthenticated} />
+        <AuthPage />
       </>
     );
   }
