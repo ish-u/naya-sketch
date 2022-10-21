@@ -41,7 +41,7 @@ const SketchesList = () => {
   }, []);
 
   return (
-    <div className="w-72 border rounded-md bg-white p-2 my-2">
+    <div className="w-72 h-76 border rounded-md bg-white p-2 my-2">
       <div className="h-12 mx-2 flex items-center justify-between font-medium">
         <div>SKETCHES</div>
         <div
@@ -67,7 +67,7 @@ const SketchesList = () => {
       {showList && (
         <>
           <hr />
-          <div className="my-2">
+          <div className="my-2 max-h-44 overflow-x-hidden overflow-y-scroll">
             {list !== null &&
               list.map((sketch) => (
                 <div

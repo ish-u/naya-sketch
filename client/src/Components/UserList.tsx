@@ -10,7 +10,7 @@ const UserList = () => {
   }, [state.currentSketch]);
 
   return (
-    <div className="w-72 border rounded-md bg-white p-2 my-2">
+    <div className="w-72 max-h-76 border rounded-md bg-white p-2 my-2">
       <div className="h-12 mx-2 flex items-center justify-between font-medium">
         <div>USERS</div>
         <div
@@ -36,7 +36,7 @@ const UserList = () => {
       {showList && (
         <>
           <hr />
-          <div className="my-2">
+          <div className="my-2 max-h-44 overflow-x-hidden overflow-y-scroll">
             {Object.keys(state.collaboraters).map((key) => (
               <div key={key} className="h-7 m-2 flex items-center">
                 <svg height="20" width="20">
