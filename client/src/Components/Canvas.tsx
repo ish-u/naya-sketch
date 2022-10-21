@@ -6,7 +6,9 @@ import { AppContext } from "../context/context";
 import Loader from "./Loader";
 
 //import pointsJSON from "../assets/sample.json";
+import io from "socket.io-client";
 
+const socket = io("http://localhost:9000");
 const Canvas = () => {
   // context
   const { state, dispatch } = useContext(AppContext);
@@ -216,6 +218,7 @@ const Canvas = () => {
       credentials: "include",
     });
     console.log(res.status);
+    sendPing(pointsToSend);
   };
 
   useEffect(() => {
@@ -261,9 +264,11 @@ const Canvas = () => {
 
       loadSketch();
 
+      socket.emit("join-room", state.currentSketch);
       return () => {
         // On unload completely destroy the application and all of it's children
         console.log("DESTROYED");
+        socket.emit("leave-room", state.currentSketch);
         app.destroy(true, true);
       };
     }
@@ -296,6 +301,55 @@ const Canvas = () => {
       };
     }
   }, [appRef.current]);
+
+  // Socket
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("CLIENT CONNECTED");
+    });
+    socket.on("pong", ({ collaboratersPoints, username }) => {
+      if (username !== state.user?.username) {
+        var code = state.collaboraters[username];
+        if (!code) {
+          code = Math.floor(Math.random() * 16777215).toString(16);
+          state.collaboraters[username] = code;
+          dispatch({
+            type: ActionType.SetCollaboraters,
+            payload: {
+              collaborater: username,
+              color: code,
+            },
+          });
+        }
+        for (var i = 0; i < collaboratersPoints.length; i++) {
+          graphicsRef.current?.lineStyle(2, parseInt("0x" + code), 1);
+          graphicsRef.current?.moveTo(
+            collaboratersPoints[i].x1,
+            collaboratersPoints[i].y1
+          );
+          graphicsRef.current?.lineTo(
+            collaboratersPoints[i].x2,
+            collaboratersPoints[i].y2
+          );
+        }
+      }
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("pong");
+    };
+  }, [state.currentSketch]);
+
+  //
+  const sendPing = (pingPoints: any) => {
+    socket.emit("ping", {
+      points: pingPoints,
+      room: state.currentSketch,
+      username: state.user?.username,
+    });
+  };
 
   return (
     <div className="-z-10 fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center">
