@@ -264,8 +264,36 @@ const Canvas = () => {
     }
   }, [state.currentSketch]);
 
+  const resize = () => {
+    if (window.innerWidth >= 1024) {
+      appRef.current?.renderer.resize(
+        window.innerWidth - 200,
+        window.innerHeight - 200
+      );
+    } else if (window.innerWidth < 1024 && window.innerWidth > 425) {
+      appRef.current?.renderer.resize(
+        window.innerWidth - 100,
+        window.innerHeight - 150
+      );
+    } else {
+      appRef.current?.renderer.resize(
+        window.innerWidth - 50,
+        window.innerHeight - 150
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (appRef.current !== null) {
+      window.addEventListener("resize", resize);
+      return () => {
+        window.removeEventListener("resize", resize);
+      };
+    }
+  }, [appRef.current]);
+
   return (
-    <div className="fixed top-0 left-0 -z-10 w-screen h-screen flex flex-col justify-center items-center">
+    <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center">
       <div className="border-4" ref={ref}></div>
       {appRef.current === null && (
         <div className="text-4xl font-semibold"> Chooose a Sketch </div>
