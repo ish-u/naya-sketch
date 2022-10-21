@@ -3,19 +3,20 @@ import { Application, Graphics, InteractionEvent } from "pixi.js";
 import { useEffect, useState, useRef, useContext } from "react";
 import { ActionType } from "../context/actions";
 import { AppContext } from "../context/context";
+import Loader from "./Loader";
 
 //import pointsJSON from "../assets/sample.json";
 
 const Canvas = () => {
   // context
   const { state, dispatch } = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
+
   // ref to canvas
   const ref = useRef<HTMLDivElement | null>(null);
   const graphicsRef = useRef<Graphics | null>(null);
   const appRef = useRef<Application | null>(null);
-  const [collaboraters, setCollaboraters] = useState<Record<string, string>>(
-    {}
-  );
+
   // Drawing
   const [points, _setPoints] = useState<
     {
@@ -88,15 +89,15 @@ const Canvas = () => {
 
   const mousedownHandler = (e: InteractionEvent) => {
     // adding the current user as collaboraters if it's their first time drawing
-    if (state.user && !collaboraters[state.user?.username]) {
-      collaboraters[state.user?.username] = Math.floor(
+    if (state.user && !state.collaboraters[state.user?.username]) {
+      state.collaboraters[state.user?.username] = Math.floor(
         Math.random() * 16777215
       ).toString(16);
       dispatch({
         type: ActionType.SetCollaboraters,
         payload: {
           collaborater: state.user?.username,
-          color: collaboraters[state.user?.username],
+          color: state.collaboraters[state.user?.username],
         },
       });
     }
@@ -113,6 +114,7 @@ const Canvas = () => {
 
   // loading the saved Sketch
   const loadSketch = async () => {
+    setLoading(true);
     _setPoints([]);
     pointsRef.current = [];
     const res = await fetch(
@@ -141,6 +143,8 @@ const Canvas = () => {
         y2: number;
         sketchedBy: string;
       }[] = [];
+
+      const collaboraters: Record<string, string> = {};
 
       // owner
       collaboraters[owner] = Math.floor(Math.random() * 16777215).toString(16);
@@ -189,6 +193,7 @@ const Canvas = () => {
         }
       }
     }
+    setLoading(false);
   };
 
   const sendData = async (
@@ -293,11 +298,12 @@ const Canvas = () => {
   }, [appRef.current]);
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center">
+    <div className="-z-10 fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center">
       <div className="border-4" ref={ref}></div>
       {appRef.current === null && (
         <div className="text-4xl font-semibold"> Chooose a Sketch </div>
       )}
+      {loading && <Loader />}
     </div>
   );
 };
