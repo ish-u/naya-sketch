@@ -1,20 +1,17 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import UserModel from "../models/user.model";
 import bcrypt from "bcrypt";
 
-export async function loginHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  res.status(201).send();
-}
+export async function loginHandler(req: Request, res: Response) {
+  const user = await UserModel.findById(req.user, {
+    password: 0,
+    _id: 0,
+    __v: 0,
+  });
 
-export async function registerHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+  res.status(201).send({ user });
+}
+export async function registerHandler(req: Request, res: Response) {
   const username: string = req.body.username;
   const password: string = req.body.password;
   const email: string = req.body.email;
@@ -61,11 +58,7 @@ export async function logoutHandler(req: Request, res: Response) {
   });
 }
 
-export async function checkSessionHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const username = (req.user as { username: string }).username;
-  res.status(201).json({ username });
+export async function checkSessionHandler(req: Request, res: Response) {
+  const user = req.user as { username: string; name: string; email: string };
+  res.status(201).json({ user });
 }

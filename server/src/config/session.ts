@@ -36,7 +36,8 @@ passport.deserializeUser(async function (id, cb) {
   try {
     const doc = await UserModel.findById(id, {
       password: 0,
-      name: 0,
+      _id: 0,
+      __v: 0,
     });
     if (!doc) {
       return cb("ERROR");

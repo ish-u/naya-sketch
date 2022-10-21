@@ -18,7 +18,7 @@ import {
 function routes(app: Express) {
   app.get("/", indexHandler);
   // SESSION
-  app.get("/check", authenticate, checkSessionHandler);
+  app.get("/user", authenticate, checkSessionHandler);
 
   // USER
   app.post("/login", passport.authenticate("local"), loginHandler);
