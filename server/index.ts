@@ -7,14 +7,14 @@ import connect from "./src/config/database";
 const PORT = process.env.PORT;
 const SOCKET_PORT = process.env.SOCKET_PORT;
 
+// SocketIO Server
+socketIO.listen(SOCKET_PORT, () => {
+  console.log(`SocketIO is running on port : ${SOCKET_PORT}.`);
+});
+
 // Express Server
 app.listen(PORT, async () => {
   await connect();
-  console.log(`Server is running on http://localhost:${PORT}.`);
+  console.log(`Express is running on : ${PORT}.`);
   routes(app);
-});
-
-// SocketIO Server
-socketIO.listen(SOCKET_PORT, () => {
-  console.log(`Server is running on port : ${SOCKET_PORT}.`);
 });

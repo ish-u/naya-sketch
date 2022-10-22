@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
@@ -13,6 +13,11 @@ const io = new Server(socketIOServer, {
     ],
     credentials: true,
   },
+  path: "/socket.io/",
+});
+
+appIO.get("/", (req: Request, res: Response) => {
+  res.send("<h1>Hello SocketIO Server</h1>");
 });
 
 io.on("connection", (socket) => {
