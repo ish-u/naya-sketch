@@ -17,7 +17,7 @@ npm install
 cd ..
 ```
 
-### Install Docker
+### Install [Docker](https://www.docker.com/)
 
 ### Run Locally
 
