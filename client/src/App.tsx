@@ -26,7 +26,9 @@ const App = () => {
           payload: { value: true },
         });
         // initializing socket client
-        const socketClient = io(import.meta.env.VITE_APP_SOCKET);
+        const socketClient = io(import.meta.env.VITE_APP_SOCKET, {
+          transports: ["websocket"],
+        });
         socketClient.on("connect", () => {
           console.log("CLIENT CONNECTED");
         });
@@ -37,6 +39,10 @@ const App = () => {
       }
       setLoading(false);
     })();
+
+    return () => {
+      state.socketClient?.off("connect");
+    };
   }, []);
 
   if (loading) {
