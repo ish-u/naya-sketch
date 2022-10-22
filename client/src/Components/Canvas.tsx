@@ -64,7 +64,22 @@ const Canvas = () => {
     prevYRef.current = value;
   }
 
-  // Handlers
+  // Mouse Handlers
+  // mouseDown
+  const mousedownHandler = (e: InteractionEvent) => {
+    setIsDrawing(true);
+    setPrevX(e.data.global.x);
+    setPrevY(e.data.global.y);
+  };
+
+  // mouseUp
+  const mouseupHandler = async () => {
+    setIsDrawing(false);
+    sendData(pointsRef.current);
+    pointsRef.current = [];
+  };
+
+  // nouseMove
   const mousemoveHandler = (e: InteractionEvent) => {
     if (isDrawingRef.current === true && state.user) {
       const points = {
@@ -74,11 +89,10 @@ const Canvas = () => {
         y2: e.data.global.y,
       };
       setPoints(points);
-      console.log(parseInt("0x" + state.collaboraters[state.user?.username]));
       graphicsRef.current?.lineStyle(
         2,
         state.user
-          ? parseInt("0x" + state.collaboraters[state.user?.username])
+          ? parseInt("0x" + state.collaborators[state.user?.username])
           : 0xffffff,
         1
       );
@@ -89,33 +103,23 @@ const Canvas = () => {
     }
   };
 
-  const mousedownHandler = (e: InteractionEvent) => {
-    setIsDrawing(true);
-    setPrevX(e.data.global.x);
-    setPrevY(e.data.global.y);
-  };
-
-  const mouseupHandler = async () => {
-    setIsDrawing(false);
-    sendData(pointsRef.current);
-    pointsRef.current = [];
-  };
-
-  // loading the saved Sketch
+  // loading the saved data of Current Sketch - state.currentSketch
   const loadSketch = async () => {
     setLoading(true);
+    // Clearing the Current Points/Arc
     _setPoints([]);
     pointsRef.current = [];
+
     // getting the saved Sketch
     const res = await fetch(
       import.meta.env.VITE_APP_API + "/sketch/get/" + state.currentSketch,
       { credentials: "include" }
     );
+
     // checking if the sketch exists
     if (res.status !== 404) {
-      // data returned from request
+      // extracting the saved points from response data
       const data = await res.json();
-      // extracting the saved points from response
       const pointsData: {
         points: {
           x1: number;
@@ -125,8 +129,9 @@ const Canvas = () => {
         }[];
         sketchedBy: string;
       }[] = data.data;
-      // old collaboraters of the sketch
-      const sketchCollaboraters: string[] = data.collaboraters;
+
+      // old collaborators of the sketch
+      const sketchCollaborators: string[] = data.collaboraters;
       var sketchPoints: {
         x1: number;
         y1: number;
@@ -135,28 +140,29 @@ const Canvas = () => {
         sketchedBy: string;
       }[] = [];
 
-      const collaboraters: Record<string, string> = {};
+      // Collaborators Record - collaborator -> color
+      const collaborators: Record<string, string> = {};
 
-      // setting the collaboraters and their colors
-      for (var i = 0; i < sketchCollaboraters.length; i++) {
-        collaboraters[sketchCollaboraters[i]] = getRandomColor();
+      // setting the collaborators and their colors
+      for (var i = 0; i < sketchCollaborators.length; i++) {
+        collaborators[sketchCollaborators[i]] = getRandomColor();
         dispatch({
-          type: ActionType.SetCollaboraters,
+          type: ActionType.SetCollaborators,
           payload: {
-            collaborater: sketchCollaboraters[i],
-            color: collaboraters[sketchCollaboraters[i]],
+            collaborater: sketchCollaborators[i],
+            color: collaborators[sketchCollaborators[i]],
           },
         });
       }
 
       // setting the color for current user
-      if (state.user && !state.collaboraters[state.user?.username]) {
-        collaboraters[state.user?.username] = getRandomColor();
+      if (state.user && !state.collaborators[state.user?.username]) {
+        collaborators[state.user?.username] = getRandomColor();
         dispatch({
-          type: ActionType.SetCollaboraters,
+          type: ActionType.SetCollaborators,
           payload: {
             collaborater: state.user.username,
-            color: collaboraters[state.user.username],
+            color: collaborators[state.user.username],
           },
         });
       }
@@ -172,12 +178,12 @@ const Canvas = () => {
           ])
       );
 
-      // draw the sketchPoints
+      // drawing the sketchPoints
       if (sketchPoints) {
         for (var i = 0; i < sketchPoints.length; i++) {
           graphicsRef.current?.lineStyle(
             2,
-            parseInt("0x" + collaboraters[sketchPoints[i].sketchedBy]),
+            parseInt("0x" + collaborators[sketchPoints[i].sketchedBy]),
             1
           );
           graphicsRef.current?.moveTo(sketchPoints[i].x1, sketchPoints[i].y1);
@@ -188,7 +194,7 @@ const Canvas = () => {
     setLoading(false);
   };
 
-  // send data
+  // sending currently drawn points to the server
   const sendData = async (
     pointsToSend: {
       x1: number;
@@ -197,7 +203,7 @@ const Canvas = () => {
       y2: number;
     }[]
   ) => {
-    const res = await fetch(import.meta.env.VITE_APP_API + "/sketch/update", {
+    await fetch(import.meta.env.VITE_APP_API + "/sketch/update", {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -208,13 +214,12 @@ const Canvas = () => {
       }),
       credentials: "include",
     });
-    console.log(res.status);
     sendPoints(pointsToSend);
   };
 
   useEffect(() => {
     if (state.currentSketch !== "") {
-      // On first render create our application
+      // creating the PixiJS Application
       const app = new Application({
         width: window.innerWidth - 200,
         height: window.innerHeight - 200,
@@ -250,28 +255,33 @@ const Canvas = () => {
       // Start the PixiJS app
       app.start();
 
+      // saving the ref for future use
       graphicsRef.current = graphics;
       appRef.current = app;
 
+      // load the state.currentSketch
       loadSketch();
 
+      // Joining Room -> state.currentSketch
       state.socketClient?.emit("join-room", {
         room: state.currentSketch,
         username: state.user?.username,
       });
       return () => {
         // On unload completely destroy the application and all of it's children
-        console.log("DESTROYED");
+        //console.log("DESTROYED");
         state.socketClient?.emit("leave-room", {
           room: state.currentSketch,
           username: state.user?.username,
         });
+        // clearing the Users of the Last Sketch
         dispatch({ type: ActionType.ClearCurrentOnline });
         app.destroy(true, true);
       };
     }
   }, [state.currentSketch]);
 
+  // resize the PixiJS Application on window size change
   const resize = () => {
     if (window.innerWidth >= 1024) {
       appRef.current?.renderer.resize(
@@ -300,68 +310,55 @@ const Canvas = () => {
     }
   }, [appRef.current]);
 
-  // Socket
+  // Socket-IO -> For Live Collaborations
   useEffect(() => {
-    // get points form other collaboraters
+    // get points form other collaborators
     state.socketClient?.on(
       "get-points",
-      ({ collaboratersPoints, username }) => {
+      ({ collaboratorsPoints, username }) => {
         if (username !== state.user?.username) {
-          /*var code = state.collaboraters[username]
-            ? state.collaboraters[username]
-            : null;
-          if (code === null) {
-            code = getRandomColor();
-            state.collaboraters[username] = code;
-            dispatch({
-              type: ActionType.SetCollaboraters,
-              payload: {
-                collaborater: username,
-                color: code,
-              },
-            });
-          }*/
-          for (var i = 0; i < collaboratersPoints.length; i++) {
+          for (var i = 0; i < collaboratorsPoints.length; i++) {
             graphicsRef.current?.lineStyle(
               2,
-              parseInt("0x" + state.collaboraters[username]),
+              parseInt("0x" + state.collaborators[username]),
               1
             );
             graphicsRef.current?.moveTo(
-              collaboratersPoints[i].x1,
-              collaboratersPoints[i].y1
+              collaboratorsPoints[i].x1,
+              collaboratorsPoints[i].y1
             );
             graphicsRef.current?.lineTo(
-              collaboratersPoints[i].x2,
-              collaboratersPoints[i].y2
+              collaboratorsPoints[i].x2,
+              collaboratorsPoints[i].y2
             );
           }
         }
       }
     );
 
+    // adding the user to state.currentOnline that joined the room
     state.socketClient?.on("add-user", ({ username }) => {
-      console.log("Added", username);
       dispatch({
         type: ActionType.AddCurrentOnline,
         payload: { username: username },
       });
+      // sending to all other users in to room that current user is online
       state.socketClient?.emit("update-me", {
         username: state.user?.username,
         room: state.currentSketch,
       });
     });
 
+    // removing the user to state.currentOnline
     state.socketClient?.on("remove-user", ({ username }) => {
-      console.log("Remove", username);
       dispatch({
         type: ActionType.RemoveCurrentOnline,
         payload: { username: username },
       });
     });
 
+    // adding the user to state.currentOnline
     state.socketClient?.on("update-user", ({ username }) => {
-      console.log("Update", username);
       if (state.user?.username !== username) {
         dispatch({
           type: ActionType.AddCurrentOnline,
@@ -393,7 +390,11 @@ const Canvas = () => {
       {appRef.current === null && (
         <div className="text-4xl font-semibold"> Chooose a Sketch </div>
       )}
-      {loading && <Loader />}
+      {loading && (
+        <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };

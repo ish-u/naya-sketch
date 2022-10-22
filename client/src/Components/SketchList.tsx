@@ -12,7 +12,7 @@ const SketchesList = () => {
   // Socket-IO
   useEffect(() => {
     state.socketClient?.on("add-sketch", ({ newSketch, username }) => {
-      console.log(newSketch, username);
+      //console.log(newSketch, username);
       if (username !== state.user?.username) {
         setList((prev) => (prev !== null ? [...prev, newSketch] : [newSketch]));
       }

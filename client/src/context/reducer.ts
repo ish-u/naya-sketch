@@ -9,10 +9,10 @@ export const AppReducer = (state: AppState, action: AppActions): AppState => {
     case ActionType.SetUser:
       return { ...state, user: action.payload };
     case ActionType.ChangeCureentSketch:
-      state.collaboraters = {};
+      state.collaborators = {};
       return { ...state, currentSketch: action.payload.currentSketch };
-    case ActionType.SetCollaboraters:
-      state.collaboraters[action.payload.collaborater] = action.payload.color;
+    case ActionType.SetCollaborators:
+      state.collaborators[action.payload.collaborater] = action.payload.color;
       return { ...state };
     case ActionType.SetSocketClient:
       return { ...state, socketClient: action.payload.socketClient };
@@ -22,14 +22,13 @@ export const AppReducer = (state: AppState, action: AppActions): AppState => {
           ...state.currentOnline,
           action.payload.username,
         ];
-        if (!state.collaboraters[action.payload.username]) {
-          state.collaboraters[action.payload.username] = Math.floor(
+        if (!state.collaborators[action.payload.username]) {
+          state.collaborators[action.payload.username] = Math.floor(
             Math.random() * 16777215
           ).toString(16);
         }
         return { ...state, currentOnline: newCurrentOnline };
       }
-
       return { ...state };
     case ActionType.RemoveCurrentOnline:
       if (state.currentOnline.includes(action.payload.username)) {

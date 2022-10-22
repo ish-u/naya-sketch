@@ -30,7 +30,7 @@ const App = () => {
           transports: ["websocket"],
         });
         socketClient.on("connect", () => {
-          console.log("CLIENT CONNECTED");
+          // console.log("CLIENT CONNECTED");
         });
         dispatch({
           type: ActionType.SetSocketClient,

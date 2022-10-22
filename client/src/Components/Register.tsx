@@ -11,6 +11,21 @@ const Register = ({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // email validation
+  const [validEmail, setValidEmail] = useState(true);
+  function emailValidation() {
+    if (email !== "") {
+      const regex =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      if (!regex.test(email)) {
+        showMessageHandler("Invalid Email");
+        setValidEmail(false);
+      } else {
+        setValidEmail(true);
+      }
+    }
+  }
+
   const registerHandler = async () => {
     const res = await fetch(import.meta.env.VITE_APP_API + "/register", {
       method: "POST",
@@ -45,6 +60,7 @@ const Register = ({
         />
         <input
           onChange={(e) => setEmail(e.target.value)}
+          onBlur={emailValidation}
           className="my-2 p-2 border-2 border-grey focus:outline-none rounded-sm"
           placeholder="email"
           type="email"
@@ -67,10 +83,15 @@ const Register = ({
       </div>
       <button
         onClick={registerHandler}
+        onMouseOver={emailValidation}
         className="w-full h-10 py-6 rounded-md bg-[#4F00C1]/90 hover:bg-[#4F00C1] flex flex-col justify-center items-center
                   text-lg font-semibold text-white hover:cursor-pointer disabled:bg-[#4F00C1]/50"
         disabled={
-          email === "" || name === "" || password === "" || username === ""
+          email === "" ||
+          name === "" ||
+          password === "" ||
+          username === "" ||
+          !validEmail
         }
       >
         <div>Register</div>

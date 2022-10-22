@@ -5,7 +5,7 @@ const UserList = () => {
   const { state } = useContext(AppContext);
   const [showList, setShowList] = useState(true);
 
-  useEffect(() => {}, [state.collaboraters, state.currentOnline]);
+  useEffect(() => {}, [state.collaborators, state.currentOnline]);
 
   return (
     <div className="w-72 max-h-76 border rounded-md bg-white p-2 my-2">
@@ -35,7 +35,7 @@ const UserList = () => {
         <>
           <hr />
           <div className="my-2 max-h-44 overflow-x-hidden overflow-y-scroll">
-            {Object.keys(state.collaboraters).map((key) => (
+            {Object.keys(state.collaborators).map((key) => (
               <div
                 key={key}
                 className={`h-7 m-2 flex items-center ${
@@ -47,7 +47,7 @@ const UserList = () => {
                     cx="5"
                     cy="10"
                     r="5"
-                    fill={"#" + state.collaboraters[key]}
+                    fill={"#" + state.collaborators[key]}
                   />
                 </svg>
                 {key}{" "}

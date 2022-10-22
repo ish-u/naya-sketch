@@ -2,7 +2,7 @@ import { Socket } from "socket.io-client";
 
 export enum ActionType {
   SetIsAuthenticated,
-  SetCollaboraters,
+  SetCollaborators,
   SetUser,
   SetSocketClient,
   ChangeCureentSketch,
@@ -17,8 +17,8 @@ export interface SetIsAuthenticated {
   payload: { value: boolean };
 }
 
-export interface SetCollaboraters {
-  type: ActionType.SetCollaboraters;
+export interface SetCollaborators {
+  type: ActionType.SetCollaborators;
   payload: { collaborater: string; color: string };
 }
 
@@ -58,7 +58,7 @@ export interface ClearCurrentOnline {
 
 export type AppActions =
   | SetIsAuthenticated
-  | SetCollaboraters
+  | SetCollaborators
   | SetUser
   | SetSocketClient
   | UpdateCollaboratorStatus

@@ -6,7 +6,7 @@ const InitialState: AppState = {
   isAuthenticated: false,
   user: null,
   currentSketch: "",
-  collaboraters: {},
+  collaborators: {},
   socketClient: null,
   currentOnline: [],
 };

@@ -3,7 +3,7 @@ import { Socket } from "socket.io-client";
 export interface AppState {
   isAuthenticated: boolean;
   currentSketch: string;
-  collaboraters: Record<string, string>;
+  collaborators: Record<string, string>;
   user: {
     username: string;
     name: string;
