@@ -4,6 +4,8 @@ import { ActionType } from "./context/actions";
 import { AppContext } from "./context/context";
 import AuthPage from "./Pages/AuthPage";
 import SketchPage from "./Pages/SketchPage";
+import io from "socket.io-client";
+
 const App = () => {
   const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
@@ -22,6 +24,15 @@ const App = () => {
         dispatch({
           type: ActionType.SetIsAuthenticated,
           payload: { value: true },
+        });
+        // initializing socket client
+        const socketClient = io(import.meta.env.VITE_APP_SOCKET);
+        socketClient.on("connect", () => {
+          console.log("CLIENT CONNECTED");
+        });
+        dispatch({
+          type: ActionType.SetSocketClient,
+          payload: { socketClient: socketClient },
         });
       }
       setLoading(false);

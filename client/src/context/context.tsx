@@ -7,6 +7,8 @@ const InitialState: AppState = {
   user: null,
   currentSketch: "",
   collaboraters: {},
+  socketClient: null,
+  currentOnline: [],
 };
 
 export const AppContext = createContext<{

@@ -9,6 +9,20 @@ const SketchesList = () => {
   const [showList, setShowList] = useState(true);
   const [list, setList] = useState<string[] | null>(null);
 
+  // Socket-IO
+  useEffect(() => {
+    state.socketClient?.on("add-sketch", ({ newSketch, username }) => {
+      console.log(newSketch, username);
+      if (username !== state.user?.username) {
+        setList((prev) => (prev !== null ? [...prev, newSketch] : [newSketch]));
+      }
+    });
+
+    return () => {
+      state.socketClient?.off("add-sketch");
+    };
+  }, [state.socketClient]);
+
   const getSketchListHandler = async () => {
     const res = await fetch(import.meta.env.VITE_APP_API + "/sketch/list", {
       method: "GET",
@@ -32,6 +46,10 @@ const SketchesList = () => {
     );
     const data = await res.json();
     setList((prev) => (prev !== null ? [...prev, data.name] : [data.name]));
+    state.socketClient?.emit("new-sketch", {
+      sketchName: data.name,
+      username: state.user?.username,
+    });
   };
 
   useEffect(() => {

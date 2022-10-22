@@ -1,3 +1,5 @@
+import { Socket } from "socket.io-client";
+
 export interface AppState {
   isAuthenticated: boolean;
   currentSketch: string;
@@ -7,4 +9,6 @@ export interface AppState {
     name: string;
     email: string;
   } | null;
+  socketClient: Socket | null;
+  currentOnline: string[];
 }

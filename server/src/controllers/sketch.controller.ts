@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import SketchModel from "../models/sketch.model";
 
-export async function sketchDataHandler(req: Request, res: Response) {
+export async function updateSketchDataHandler(req: Request, res: Response) {
   const data = req.body.data;
   const name = req.body.name;
   const username = (req.user as { username: string }).username;

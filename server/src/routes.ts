@@ -9,7 +9,7 @@ import {
   logoutHandler,
 } from "./controllers/user.controller";
 import {
-  sketchDataHandler,
+  updateSketchDataHandler,
   createSketchHandler,
   getSketchDataHandler,
   getSkechListHandler,
@@ -26,7 +26,7 @@ function routes(app: Express) {
   app.get("/logout", authenticate, logoutHandler);
 
   // SKETCH
-  app.put("/sketch/update", authenticate, sketchDataHandler);
+  app.put("/sketch/update", authenticate, updateSketchDataHandler);
   app.get("/sketch/create/:name", authenticate, createSketchHandler);
   app.get("/sketch/get/:name", authenticate, getSketchDataHandler);
   app.get("/sketch/list", authenticate, getSkechListHandler);

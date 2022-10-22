@@ -5,9 +5,7 @@ const UserList = () => {
   const { state } = useContext(AppContext);
   const [showList, setShowList] = useState(true);
 
-  useEffect(() => {
-    console.log(state.currentSketch);
-  }, [state.currentSketch]);
+  useEffect(() => {}, [state.collaboraters, state.currentOnline]);
 
   return (
     <div className="w-72 max-h-76 border rounded-md bg-white p-2 my-2">
@@ -38,7 +36,12 @@ const UserList = () => {
           <hr />
           <div className="my-2 max-h-44 overflow-x-hidden overflow-y-scroll">
             {Object.keys(state.collaboraters).map((key) => (
-              <div key={key} className="h-7 m-2 flex items-center">
+              <div
+                key={key}
+                className={`h-7 m-2 flex items-center ${
+                  key === state.user?.username ? "font-semibold" : ""
+                }`}
+              >
                 <svg height="20" width="20">
                   <circle
                     cx="5"
@@ -47,7 +50,17 @@ const UserList = () => {
                     fill={"#" + state.collaboraters[key]}
                   />
                 </svg>
-                {key}
+                {key}{" "}
+                {key !== state.user?.username && (
+                  <span className="font-thin text-black/75">
+                    {state.currentOnline.includes(key)
+                      ? " (online)"
+                      : " (offline)"}
+                  </span>
+                )}
+                {key === state.user?.username && (
+                  <span className="font-thin text-black/75"> (you) </span>
+                )}
               </div>
             ))}
           </div>

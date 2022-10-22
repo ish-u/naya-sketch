@@ -66,7 +66,7 @@ const Canvas = () => {
 
   // Handlers
   const mousemoveHandler = (e: InteractionEvent) => {
-    if (isDrawingRef.current === true && state.user) {
+    if (isDrawingRef.current === true) {
       const points = {
         x1: prevXRef.current,
         y1: prevYRef.current,
@@ -74,7 +74,6 @@ const Canvas = () => {
         y2: e.data.global.y,
       };
       setPoints(points);
-      console.log(parseInt("0x" + state.collaboraters[state.user?.username]));
       graphicsRef.current?.lineStyle(
         2,
         state.user
@@ -266,7 +265,7 @@ const Canvas = () => {
           room: state.currentSketch,
           username: state.user?.username,
         });
-        dispatch({ type: ActionType.ClearCurrentOnline });
+        //dispatch({ type: ActionType.ClearCurrentOnline });
         app.destroy(true, true);
       };
     }
@@ -307,7 +306,7 @@ const Canvas = () => {
       "get-points",
       ({ collaboratersPoints, username }) => {
         if (username !== state.user?.username) {
-          /*var code = state.collaboraters[username]
+          var code = state.collaboraters[username]
             ? state.collaboraters[username]
             : null;
           if (code === null) {
@@ -320,13 +319,9 @@ const Canvas = () => {
                 color: code,
               },
             });
-          }*/
+          }
           for (var i = 0; i < collaboratersPoints.length; i++) {
-            graphicsRef.current?.lineStyle(
-              2,
-              parseInt("0x" + state.collaboraters[username]),
-              1
-            );
+            graphicsRef.current?.lineStyle(2, parseInt("0x" + code), 1);
             graphicsRef.current?.moveTo(
               collaboratersPoints[i].x1,
               collaboratersPoints[i].y1
@@ -346,35 +341,16 @@ const Canvas = () => {
         type: ActionType.AddCurrentOnline,
         payload: { username: username },
       });
-      state.socketClient?.emit("update-me", {
-        username: state.user?.username,
-        room: state.currentSketch,
-      });
     });
 
     state.socketClient?.on("remove-user", ({ username }) => {
       console.log("Remove", username);
-      dispatch({
-        type: ActionType.RemoveCurrentOnline,
-        payload: { username: username },
-      });
-    });
-
-    state.socketClient?.on("update-user", ({ username }) => {
-      console.log("Update", username);
-      if (state.user?.username !== username) {
-        dispatch({
-          type: ActionType.AddCurrentOnline,
-          payload: { username: username },
-        });
-      }
     });
 
     return () => {
       state.socketClient?.off("get-points");
       state.socketClient?.off("remove-user");
       state.socketClient?.off("add-user");
-      state.socketClient?.off("update-user");
     };
   }, [state.currentSketch]);
 
