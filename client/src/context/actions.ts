@@ -24,7 +24,12 @@ export interface SetCollaborators {
 
 export interface SetUser {
   type: ActionType.SetUser;
-  payload: { username: string; email: string; name: string };
+  payload: {
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  };
 }
 
 export interface ChangeCureentSketch {
