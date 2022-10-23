@@ -1,0 +1,804 @@
+{
+	"log": {
+		"version": "1.2",
+		"creator": {
+			"name": "Insomnia REST Client",
+			"version": "insomnia.desktop.app:v2022.6.0"
+		},
+		"entries": [
+			{
+				"startedDateTime": "2022-10-23T10:52:11.118Z",
+				"time": 257.527,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:5000/sketch/create/Sketch%201",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"domain": "localhost",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": "",
+						"params": []
+					},
+					"headersSize": -1,
+					"bodySize": -1,
+					"settingEncodeUrl": true
+				},
+				"response": {
+					"status": 510,
+					"statusText": "Not Extended",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "10"
+						},
+						{
+							"name": "ETag",
+							"value": "W/\"a-dZO1N3n8cxTQPS5V0xaSF3O8/ws\""
+						},
+						{
+							"name": "Date",
+							"value": "Thu, 20 Oct 2022 06:18:01 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"content": {
+						"size": 10,
+						"mimeType": "application/json; charset=utf-8",
+						"text": "{\"err\":{}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 257.527,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Create Sketch"
+			},
+			{
+				"startedDateTime": "2022-10-23T10:52:11.118Z",
+				"time": 240.815,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:5000/sketch/list",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"domain": "localhost",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": "",
+						"params": []
+					},
+					"headersSize": -1,
+					"bodySize": -1,
+					"settingEncodeUrl": true
+				},
+				"response": {
+					"status": 200,
+					"statusText": "OK",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "47"
+						},
+						{
+							"name": "ETag",
+							"value": "W/\"2f-wwq62T/pJnuz8mGXABpWIUO7FcQ\""
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 23 Oct 2022 08:34:10 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"content": {
+						"size": 47,
+						"mimeType": "application/json; charset=utf-8",
+						"text": "{\"sketches\":[\"Sketch 1\",\"Sketch 2\",\"Sketch 3\"]}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 240.815,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Get Sketch List"
+			},
+			{
+				"startedDateTime": "2022-10-23T10:52:11.118Z",
+				"time": 234.182,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:5000/sketch/get/Sketch%203",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"domain": "localhost",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": "",
+						"params": []
+					},
+					"headersSize": -1,
+					"bodySize": -1,
+					"settingEncodeUrl": true
+				},
+				"response": {
+					"status": 200,
+					"statusText": "OK",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "9876"
+						},
+						{
+							"name": "ETag",
+							"value": "W/\"2694-F56a+np5JmsWRWZVVUCwjoepCmQ\""
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 23 Oct 2022 08:29:50 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"content": {
+						"size": 9876,
+						"mimeType": "application/json; charset=utf-8",
+						"text": "{\"data\":[{\"points\":[{\"x1\":87.19999694824219,\"y1\":83.20001220703125,\"x2\":87.19999694824219,\"y2\":84.80003356933594,\"_id\":\"6354fb6fd1040bd8cbf2308f\"},{\"x1\":87.19999694824219,\"y1\":84.80003356933594,\"x2\":87.19999694824219,\"y2\":85.60000610351562,\"_id\":\"6354fb6fd1040bd8cbf23090\"},{\"x1\":87.19999694824219,\"y1\":85.60000610351562,\"x2\":87.19999694824219,\"y2\":87.20001220703125,\"_id\":\"6354fb6fd1040bd8cbf23091\"},{\"x1\":87.19999694824219,\"y1\":87.20001220703125,\"x2\":87.19999694824219,\"y2\":89.60000610351562,\"_id\":\"6354fb6fd1040bd8cbf23092\"},{\"x1\":87.19999694824219,\"y1\":89.60000610351562,\"x2\":86.40000915527344,\"y2\":92,\"_id\":\"6354fb6fd1040bd8cbf23093\"},{\"x1\":86.40000915527344,\"y1\":92,\"x2\":85.60000610351562,\"y2\":95.20001220703125,\"_id\":\"6354fb6fd1040bd8cbf23094\"},{\"x1\":85.60000610351562,\"y1\":95.20001220703125,\"x2\":85.60000610351562,\"y2\":98.40000915527344,\"_id\":\"6354fb6fd1040bd8cbf23095\"},{\"x1\":85.60000610351562,\"y1\":98.40000915527344,\"x2\":85.60000610351562,\"y2\":101.60000610351562,\"_id\":\"6354fb6fd1040bd8cbf23096\"},{\"x1\":85.60000610351562,\"y1\":101.60000610351562,\"x2\":85.60000610351562,\"y2\":104,\"_id\":\"6354fb6fd1040bd8cbf23097\"},{\"x1\":85.60000610351562,\"y1\":104,\"x2\":85.60000610351562,\"y2\":106.40000915527344,\"_id\":\"6354fb6fd1040bd8cbf23098\"},{\"x1\":85.60000610351562,\"y1\":106.40000915527344,\"x2\":85.60000610351562,\"y2\":108.80003356933594,\"_id\":\"6354fb6fd1040bd8cbf23099\"},{\"x1\":85.60000610351562,\"y1\":108.80003356933594,\"x2\":85.60000610351562,\"y2\":109.60000610351562,\"_id\":\"6354fb6fd1040bd8cbf2309a\"},{\"x1\":85.60000610351562,\"y1\":109.60000610351562,\"x2\":85.60000610351562,\"y2\":112,\"_id\":\"6354fb6fd1040bd8cbf2309b\"},{\"x1\":85.60000610351562,\"y1\":112,\"x2\":85.60000610351562,\"y2\":112.80003356933594,\"_id\":\"6354fb6fd1040bd8cbf2309c\"},{\"x1\":85.60000610351562,\"y1\":112.80003356933594,\"x2\":85.60000610351562,\"y2\":113.60000610351562,\"_id\":\"6354fb6fd1040bd8cbf2309d\"},{\"x1\":85.60000610351562,\"y1\":113.60000610351562,\"x2\":85.60000610351562,\"y2\":115.19999694824219,\"_id\":\"6354fb6fd1040bd8cbf2309e\"},{\"x1\":85.60000610351562,\"y1\":115.19999694824219,\"x2\":85.60000610351562,\"y2\":116,\"_id\":\"6354fb6fd1040bd8cbf2309f\"},{\"x1\":85.60000610351562,\"y1\":116,\"x2\":85.60000610351562,\"y2\":116.80003356933594,\"_id\":\"6354fb6fd1040bd8cbf230a0\"},{\"x1\":85.60000610351562,\"y1\":116.80003356933594,\"x2\":85.60000610351562,\"y2\":118.40000915527344,\"_id\":\"6354fb6fd1040bd8cbf230a1\"},{\"x1\":85.60000610351562,\"y1\":118.40000915527344,\"x2\":85.60000610351562,\"y2\":119.19999694824219,\"_id\":\"6354fb6fd1040bd8cbf230a2\"}],\"sketchedBy\":\"bar\",\"_id\":\"6354fb6fd1040bd8cbf2308e\"},{\"points\":[{\"x1\":153.60000610351562,\"y1\":86.80000305175781,\"x2\":153.60000610351562,\"y2\":86.80000305175781,\"_id\":\"6354fb74d1040bd8cbf230bc\"},{\"x1\":153.60000610351562,\"y1\":86.80000305175781,\"x2\":153.60000610351562,\"y2\":86.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230bd\"},{\"x1\":153.60000610351562,\"y1\":86.00003051757812,\"x2\":153.60000610351562,\"y2\":86.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230be\"},{\"x1\":153.60000610351562,\"y1\":86.00003051757812,\"x2\":156,\"y2\":85.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230bf\"},{\"x1\":156,\"y1\":85.19999694824219,\"x2\":157.60000610351562,\"y2\":84.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230c0\"},{\"x1\":157.60000610351562,\"y1\":84.39999389648438,\"x2\":160,\"y2\":83.60000610351562,\"_id\":\"6354fb74d1040bd8cbf230c1\"},{\"x1\":160,\"y1\":83.60000610351562,\"x2\":161.60000610351562,\"y2\":82.80000305175781,\"_id\":\"6354fb74d1040bd8cbf230c2\"},{\"x1\":161.60000610351562,\"y1\":82.80000305175781,\"x2\":164,\"y2\":82,\"_id\":\"6354fb74d1040bd8cbf230c3\"},{\"x1\":164,\"y1\":82,\"x2\":169.60000610351562,\"y2\":81.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230c4\"},{\"x1\":169.60000610351562,\"y1\":81.19999694824219,\"x2\":170.39999389648438,\"y2\":81.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230c5\"},{\"x1\":170.39999389648438,\"y1\":81.19999694824219,\"x2\":172.80001831054688,\"y2\":81.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230c6\"},{\"x1\":172.80001831054688,\"y1\":81.19999694824219,\"x2\":176,\"y2\":81.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230c7\"},{\"x1\":176,\"y1\":81.19999694824219,\"x2\":177.60000610351562,\"y2\":81.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230c8\"},{\"x1\":177.60000610351562,\"y1\":81.19999694824219,\"x2\":180,\"y2\":81.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230c9\"},{\"x1\":180,\"y1\":81.19999694824219,\"x2\":182.39999389648438,\"y2\":82.80000305175781,\"_id\":\"6354fb74d1040bd8cbf230ca\"},{\"x1\":182.39999389648438,\"y1\":82.80000305175781,\"x2\":183.20001220703125,\"y2\":83.60000610351562,\"_id\":\"6354fb74d1040bd8cbf230cb\"},{\"x1\":183.20001220703125,\"y1\":83.60000610351562,\"x2\":184.80001831054688,\"y2\":85.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230cc\"},{\"x1\":184.80001831054688,\"y1\":85.19999694824219,\"x2\":184.80001831054688,\"y2\":86.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230cd\"},{\"x1\":184.80001831054688,\"y1\":86.00003051757812,\"x2\":185.60000610351562,\"y2\":86.80000305175781,\"_id\":\"6354fb74d1040bd8cbf230ce\"},{\"x1\":185.60000610351562,\"y1\":86.80000305175781,\"x2\":186.39999389648438,\"y2\":88.40000915527344,\"_id\":\"6354fb74d1040bd8cbf230cf\"},{\"x1\":186.39999389648438,\"y1\":88.40000915527344,\"x2\":186.39999389648438,\"y2\":89.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230d0\"},{\"x1\":186.39999389648438,\"y1\":89.19999694824219,\"x2\":187.20001220703125,\"y2\":90.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230d1\"},{\"x1\":187.20001220703125,\"y1\":90.00003051757812,\"x2\":187.20001220703125,\"y2\":91.60000610351562,\"_id\":\"6354fb74d1040bd8cbf230d2\"},{\"x1\":187.20001220703125,\"y1\":91.60000610351562,\"x2\":187.20001220703125,\"y2\":92.40000915527344,\"_id\":\"6354fb74d1040bd8cbf230d3\"},{\"x1\":187.20001220703125,\"y1\":92.40000915527344,\"x2\":187.20001220703125,\"y2\":93.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230d4\"},{\"x1\":187.20001220703125,\"y1\":93.19999694824219,\"x2\":187.20001220703125,\"y2\":95.60000610351562,\"_id\":\"6354fb74d1040bd8cbf230d5\"},{\"x1\":187.20001220703125,\"y1\":95.60000610351562,\"x2\":186.39999389648438,\"y2\":97.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230d6\"},{\"x1\":186.39999389648438,\"y1\":97.19999694824219,\"x2\":184.80001831054688,\"y2\":98.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230d7\"},{\"x1\":184.80001831054688,\"y1\":98.00003051757812,\"x2\":183.20001220703125,\"y2\":100.40000915527344,\"_id\":\"6354fb74d1040bd8cbf230d8\"},{\"x1\":183.20001220703125,\"y1\":100.40000915527344,\"x2\":180.80001831054688,\"y2\":102.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230d9\"},{\"x1\":180.80001831054688,\"y1\":102.00003051757812,\"x2\":177.60000610351562,\"y2\":104.40000915527344,\"_id\":\"6354fb74d1040bd8cbf230da\"},{\"x1\":177.60000610351562,\"y1\":104.40000915527344,\"x2\":173.60000610351562,\"y2\":106.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230db\"},{\"x1\":173.60000610351562,\"y1\":106.00003051757812,\"x2\":168.80001831054688,\"y2\":108.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230dc\"},{\"x1\":168.80001831054688,\"y1\":108.39999389648438,\"x2\":163.20001220703125,\"y2\":110.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230dd\"},{\"x1\":163.20001220703125,\"y1\":110.00003051757812,\"x2\":160.80001831054688,\"y2\":111.60000610351562,\"_id\":\"6354fb74d1040bd8cbf230de\"},{\"x1\":160.80001831054688,\"y1\":111.60000610351562,\"x2\":156.80001831054688,\"y2\":113.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230df\"},{\"x1\":156.80001831054688,\"y1\":113.19999694824219,\"x2\":153.60000610351562,\"y2\":114.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230e0\"},{\"x1\":153.60000610351562,\"y1\":114.00003051757812,\"x2\":152,\"y2\":114.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230e1\"},{\"x1\":152,\"y1\":114.00003051757812,\"x2\":152,\"y2\":114.80000305175781,\"_id\":\"6354fb74d1040bd8cbf230e2\"},{\"x1\":152,\"y1\":114.80000305175781,\"x2\":154.40000915527344,\"y2\":114.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230e3\"},{\"x1\":154.40000915527344,\"y1\":114.00003051757812,\"x2\":156,\"y2\":113.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230e4\"},{\"x1\":156,\"y1\":113.19999694824219,\"x2\":158.39999389648438,\"y2\":113.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230e5\"},{\"x1\":158.39999389648438,\"y1\":113.19999694824219,\"x2\":159.20001220703125,\"y2\":113.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230e6\"},{\"x1\":159.20001220703125,\"y1\":113.19999694824219,\"x2\":161.60000610351562,\"y2\":112.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230e7\"},{\"x1\":161.60000610351562,\"y1\":112.39999389648438,\"x2\":166.39999389648438,\"y2\":112.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230e8\"},{\"x1\":166.39999389648438,\"y1\":112.39999389648438,\"x2\":168.80001831054688,\"y2\":112.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230e9\"},{\"x1\":168.80001831054688,\"y1\":112.39999389648438,\"x2\":174.39999389648438,\"y2\":112.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230ea\"},{\"x1\":174.39999389648438,\"y1\":112.39999389648438,\"x2\":175.20001220703125,\"y2\":112.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230eb\"},{\"x1\":175.20001220703125,\"y1\":112.39999389648438,\"x2\":178.39999389648438,\"y2\":112.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230ec\"},{\"x1\":178.39999389648438,\"y1\":112.39999389648438,\"x2\":183.20001220703125,\"y2\":112.39999389648438,\"_id\":\"6354fb74d1040bd8cbf230ed\"},{\"x1\":183.20001220703125,\"y1\":112.39999389648438,\"x2\":185.60000610351562,\"y2\":113.19999694824219,\"_id\":\"6354fb74d1040bd8cbf230ee\"},{\"x1\":185.60000610351562,\"y1\":113.19999694824219,\"x2\":188,\"y2\":114.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230ef\"},{\"x1\":188,\"y1\":114.00003051757812,\"x2\":188.80001831054688,\"y2\":114.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230f0\"},{\"x1\":188.80001831054688,\"y1\":114.00003051757812,\"x2\":189.60000610351562,\"y2\":114.00003051757812,\"_id\":\"6354fb74d1040bd8cbf230f1\"},{\"x1\":189.60000610351562,\"y1\":114.00003051757812,\"x2\":189.60000610351562,\"y2\":114.80000305175781,\"_id\":\"6354fb74d1040bd8cbf230f2\"},{\"x1\":189.60000610351562,\"y1\":114.80000305175781,\"x2\":190.39999389648438,\"y2\":114.80000305175781,\"_id\":\"6354fb74d1040bd8cbf230f3\"},{\"x1\":190.39999389648438,\"y1\":114.80000305175781,\"x2\":190.39999389648438,\"y2\":115.60000610351562,\"_id\":\"6354fb74d1040bd8cbf230f4\"},{\"x1\":190.39999389648438,\"y1\":115.60000610351562,\"x2\":191.20001220703125,\"y2\":115.60000610351562,\"_id\":\"6354fb74d1040bd8cbf230f5\"}],\"sketchedBy\":\"anmol\",\"_id\":\"6354fb74d1040bd8cbf230bb\"}],\"collaboraters\":[\"bar\",\"anmol\"],\"owner\":\"anmol\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 234.182,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Get Sketch Data"
+			},
+			{
+				"startedDateTime": "2022-10-23T10:52:11.118Z",
+				"time": 247.84,
+				"request": {
+					"method": "PUT",
+					"url": "http://localhost:5000/sketch/update",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"domain": "localhost",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/json",
+						"text": "{\n  \"data\": {\n    \"points\": [\n      {\n        \"x1\": 0,\n        \"y1\": 0,\n        \"x2\": 200,\n        \"y2\": 200\n      }\n    ],\n    \"sketchedBy\": \"anmol\"\n  },\n  \"name\": \"Sketch 4\"\n}",
+						"params": []
+					},
+					"headersSize": -1,
+					"bodySize": -1,
+					"settingEncodeUrl": true
+				},
+				"response": {
+					"status": 510,
+					"statusText": "Not Extended",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "12"
+						},
+						{
+							"name": "ETag",
+							"value": "W/\"c-3Rk1bge0s6VuJbi+S2m2iU0UGdY\""
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 23 Oct 2022 08:47:10 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"content": {
+						"size": 12,
+						"mimeType": "application/json; charset=utf-8",
+						"text": "{\"error\":{}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 247.84,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Update Sketch Data"
+			},
+			{
+				"startedDateTime": "2022-10-23T10:52:11.118Z",
+				"time": 462.993,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:5000/register",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"domain": "localhost",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/x-www-form-urlencoded"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/x-www-form-urlencoded",
+						"text": "",
+						"params": [
+							{
+								"name": "username",
+								"value": "bar"
+							},
+							{
+								"name": "email",
+								"value": "foo@foo.com"
+							},
+							{
+								"name": "password",
+								"value": "123456"
+							},
+							{
+								"name": "firstName",
+								"value": "foo"
+							},
+							{
+								"name": "lastName",
+								"value": "bar"
+							}
+						]
+					},
+					"headersSize": -1,
+					"bodySize": -1,
+					"settingEncodeUrl": true
+				},
+				"response": {
+					"status": 201,
+					"statusText": "Created",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "190"
+						},
+						{
+							"name": "ETag",
+							"value": "W/\"be-di2Sg+ivMk6/4SYG9Jbv0o4oprY\""
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 23 Oct 2022 06:09:14 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"content": {
+						"size": 190,
+						"mimeType": "application/json; charset=utf-8",
+						"text": "{\"username\":\"bar\",\"password\":\"$2b$10$SCd64PRM6f/hve0Dw4guwOR4QAe38v1JYeFAmXeqdt9x97q5LloSS\",\"firstName\":\"foo\",\"lastName\":\"bar\",\"email\":\"foo@foo.com\",\"_id\":\"6354da8aab30a328c6d565e5\",\"__v\":0}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 462.993,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Register"
+			},
+			{
+				"startedDateTime": "2022-10-23T10:52:11.118Z",
+				"time": 311.061,
+				"request": {
+					"method": "POST",
+					"url": "http://localhost:5000/login",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"domain": "localhost",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "Content-Type",
+							"value": "application/x-www-form-urlencoded"
+						}
+					],
+					"queryString": [],
+					"postData": {
+						"mimeType": "application/x-www-form-urlencoded",
+						"text": "",
+						"params": [
+							{
+								"name": "email",
+								"value": "foo@foo.com"
+							},
+							{
+								"name": "password",
+								"value": "123456"
+							}
+						]
+					},
+					"headersSize": -1,
+					"bodySize": -1,
+					"settingEncodeUrl": true
+				},
+				"response": {
+					"status": 201,
+					"statusText": "Created",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [
+						{
+							"name": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "84"
+						},
+						{
+							"name": "ETag",
+							"value": "W/\"54-UG8mVjXNnhGKKxeeQC1rVpK0mmU\""
+						},
+						{
+							"name": "Set-Cookie",
+							"value": "connect.sid=s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k; Path=/; Expires=Mon, 24 Oct 2022 06:09:32 GMT; HttpOnly; SameSite=Lax"
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 23 Oct 2022 06:09:32 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"content": {
+						"size": 84,
+						"mimeType": "application/json; charset=utf-8",
+						"text": "{\"user\":{\"username\":\"bar\",\"firstName\":\"foo\",\"lastName\":\"bar\",\"email\":\"foo@foo.com\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 311.061,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Login"
+			},
+			{
+				"startedDateTime": "2022-10-23T10:52:11.118Z",
+				"time": 226.343,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:5000/logout",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"domain": "localhost",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": "",
+						"params": []
+					},
+					"headersSize": -1,
+					"bodySize": -1,
+					"settingEncodeUrl": true
+				},
+				"response": {
+					"status": 401,
+					"statusText": "Unauthorized",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "26"
+						},
+						{
+							"name": "ETag",
+							"value": "W/\"1a-/34Y3v2kCVg446xosQ3w0kpvWoY\""
+						},
+						{
+							"name": "Date",
+							"value": "Fri, 21 Oct 2022 07:39:09 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"content": {
+						"size": 26,
+						"mimeType": "application/json; charset=utf-8",
+						"text": "{\"ERROR\":\"UNAUTENTICATED\"}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 226.343,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Logout"
+			},
+			{
+				"startedDateTime": "2022-10-23T10:52:11.118Z",
+				"time": 10.725999999999999,
+				"request": {
+					"method": "GET",
+					"url": "http://localhost:5000/user",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [
+						{
+							"name": "connect.sid",
+							"value": "s%3Atv52wq7fv5W_PKqg-6RRugwJHfntO8lx.rTykqohdFAaSYK97NW7u9nNcWGgvpQmKkcufg257f6k",
+							"path": "/",
+							"domain": "localhost",
+							"expires": "2022-10-24T06:09:32.000Z",
+							"httpOnly": true
+						}
+					],
+					"headers": [],
+					"queryString": [],
+					"postData": {
+						"mimeType": "",
+						"text": "",
+						"params": []
+					},
+					"headersSize": -1,
+					"bodySize": -1,
+					"settingEncodeUrl": true
+				},
+				"response": {
+					"status": 201,
+					"statusText": "Created",
+					"httpVersion": "HTTP/1.1",
+					"cookies": [],
+					"headers": [
+						{
+							"name": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"name": "Vary",
+							"value": "Origin"
+						},
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"name": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"name": "Content-Length",
+							"value": "84"
+						},
+						{
+							"name": "ETag",
+							"value": "W/\"54-UG8mVjXNnhGKKxeeQC1rVpK0mmU\""
+						},
+						{
+							"name": "Date",
+							"value": "Sun, 23 Oct 2022 06:09:45 GMT"
+						},
+						{
+							"name": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"name": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"content": {
+						"size": 84,
+						"mimeType": "application/json; charset=utf-8",
+						"text": "{\"user\":{\"username\":\"bar\",\"firstName\":\"foo\",\"lastName\":\"bar\",\"email\":\"foo@foo.com\"}}"
+					},
+					"redirectURL": "",
+					"headersSize": -1,
+					"bodySize": -1
+				},
+				"cache": {},
+				"timings": {
+					"blocked": -1,
+					"dns": -1,
+					"connect": -1,
+					"send": 0,
+					"wait": 10.725999999999999,
+					"receive": 0,
+					"ssl": -1
+				},
+				"comment": "Check Session"
+			}
+		]
+	}
+}
