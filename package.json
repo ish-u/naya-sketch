@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A Collborative Sketch Tool",
   "scripts": {
+    "init": "npm install && cd client && npm install && cd ../server && npm install && cd ..",
     "server": "npm run dev --prefix server",
     "client": "npm run dev --prefix client",
-    "db": "docker-compose -f database/docker-compose.yml -p naya-sketch-db up --build",
-    "dev": "concurrently \"npm run client\"  \"npm run db\" \"npm run server\""
+    "db": "docker-compose -f database/docker-compose.yml -p naya-sketch-db up --build"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,5 @@
   "bugs": {
     "url": "https://github.com/ish-u/naya-sketch/issues"
   },
-  "homepage": "https://github.com/ish-u/naya-sketch#readme",
-  "dependencies": {
-    "concurrently": "^7.4.0"
-  }
+  "homepage": "https://github.com/ish-u/naya-sketch#readme"
 }
