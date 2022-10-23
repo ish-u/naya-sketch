@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Loader from "./Loader";
 const Register = ({
   setCurrent,
   showMessageHandler,
@@ -11,6 +12,7 @@ const Register = ({
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // email validation
   const [validEmail, setValidEmail] = useState(true);
@@ -28,6 +30,7 @@ const Register = ({
   }
 
   const registerHandler = async () => {
+    setLoading(true);
     const res = await fetch(import.meta.env.VITE_APP_API + "/register", {
       method: "POST",
       headers: {
@@ -48,6 +51,7 @@ const Register = ({
     } else {
       showMessageHandler("somethng went wrong");
     }
+    setLoading(false);
   };
 
   return (
@@ -100,10 +104,11 @@ const Register = ({
           lastName === "" ||
           password === "" ||
           username === "" ||
-          !validEmail
+          !validEmail ||
+          loading
         }
       >
-        <div>Register</div>
+        <div>{loading ? <Loader /> : "Register"}</div>
       </button>
       <div className="my-4 text-center text-sm">
         Already have an account?{" "}

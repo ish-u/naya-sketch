@@ -6,7 +6,7 @@
 
 ![](/docs/naya-sketch.gif)
 
-Live Demo - [https://naya-sketch.up.railway.app/](https://naya-sketch.up.railway.app/)
+### Live Demo - [https://naya-sketch.up.railway.app/](https://naya-sketch.up.railway.app/)
 
 ---
 

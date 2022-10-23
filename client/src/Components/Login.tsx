@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import google from "../assets/google.svg";
 import { ActionType } from "../context/actions";
 import { AppContext } from "../context/context";
+import Loader from "./Loader";
 const Login = ({
   setCurrent,
   showMessageHandler,
@@ -12,6 +13,7 @@ const Login = ({
   const { dispatch } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // email validation
   const [validEmail, setValidEmail] = useState(true);
@@ -29,6 +31,7 @@ const Login = ({
   }
 
   const loginHandler = async () => {
+    setLoading(true);
     const res = await fetch(import.meta.env.VITE_APP_API + "/login", {
       method: "POST",
       headers: {
@@ -54,6 +57,7 @@ const Login = ({
     } else {
       showMessageHandler("Invalid Credentials");
     }
+    setLoading(false);
   };
 
   return (
@@ -84,9 +88,9 @@ const Login = ({
         onMouseOver={emailValidation}
         className="w-full h-10 py-6 rounded-md bg-[#4F00C1]/90 hover:bg-[#4F00C1] flex flex-col justify-center items-center 
                    text-lg font-semibold text-white hover:cursor-pointer transition duration-150 disabled:bg-[#4F00C1]/50"
-        disabled={email === "" || password === "" || !validEmail}
+        disabled={email === "" || password === "" || !validEmail || loading}
       >
-        <div>Login</div>
+        <div>{loading ? <Loader /> : "Login"}</div>
       </button>
       <div className="my-4 text-center text-sm">
         Don't have an account?{" "}
