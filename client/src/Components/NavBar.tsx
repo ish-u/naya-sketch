@@ -9,6 +9,10 @@ const NavBar = () => {
     await fetch(import.meta.env.VITE_APP_API + "/logout", {
       credentials: "include",
     });
+    state.socketClient?.emit("leave-room", {
+      room: state.currentSketch,
+      username: state.user?.username,
+    });
     location.reload();
   };
   return (
@@ -20,7 +24,7 @@ const NavBar = () => {
         <div className="mx-2">
           <span className="font-semibold">@{state.user?.username}</span>
           {"/"}
-          {state.user?.name}
+          {state.user?.firstName} {""} {state.user?.lastName}
         </div>
         <img
           className="mx-2 border-black rounded-full"

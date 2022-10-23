@@ -43,7 +43,6 @@ const Login = ({
     const status = res.status;
     if (status === 201) {
       const user = (await res.json()).user;
-      console.log(user);
       dispatch({
         type: ActionType.SetUser,
         payload: user,

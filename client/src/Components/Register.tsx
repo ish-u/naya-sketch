@@ -6,7 +6,8 @@ const Register = ({
   setCurrent: (value: "login" | "register") => void;
   showMessageHandler: (value: string) => void;
 }) => {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +34,8 @@ const Register = ({
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        name: name,
+        firstName: firstName,
+        lastName: lastName,
         username: username,
         email: email,
         password: password,
@@ -53,11 +55,17 @@ const Register = ({
       <div className="mb-4 text-4xl font-semibold text-[#4F00C1]">Register</div>
       <div className="my-2 flex flex-col">
         <input
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setFirstName(e.target.value)}
           className="my-2 p-2 border-2 border-grey focus:outline-none rounded-sm"
-          placeholder="name"
+          placeholder="first name"
           type="text"
         />
+        <input
+          onChange={(e) => setLastName(e.target.value)}
+          className="my-2 p-2 border-2 border-grey focus:outline-none rounded-sm"
+          placeholder="last name"
+          type="text"
+        />{" "}
         <input
           onChange={(e) => setEmail(e.target.value)}
           onBlur={emailValidation}
@@ -88,7 +96,8 @@ const Register = ({
                   text-lg font-semibold text-white hover:cursor-pointer disabled:bg-[#4F00C1]/50"
         disabled={
           email === "" ||
-          name === "" ||
+          lastName === "" ||
+          lastName === "" ||
           password === "" ||
           username === "" ||
           !validEmail

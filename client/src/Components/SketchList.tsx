@@ -89,12 +89,14 @@ const SketchesList = () => {
             {list !== null &&
               list.map((sketch) => (
                 <div
-                  onClick={() =>
-                    dispatch({
-                      type: ActionType.ChangeCureentSketch,
-                      payload: { currentSketch: sketch },
-                    })
-                  }
+                  onClick={() => {
+                    if (state.currentSketch !== sketch) {
+                      dispatch({
+                        type: ActionType.ChangeCureentSketch,
+                        payload: { currentSketch: sketch },
+                      });
+                    }
+                  }}
                   key={sketch}
                   className={`h-8 m-2 flex items-center ${
                     sketch === state.currentSketch ? "text-[#4F00C1]" : ""

@@ -6,8 +6,9 @@ export interface AppState {
   collaborators: Record<string, string>;
   user: {
     username: string;
-    name: string;
     email: string;
+    firstName: string;
+    lastName: string;
   } | null;
   socketClient: Socket | null;
   currentOnline: string[];

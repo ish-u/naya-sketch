@@ -15,10 +15,11 @@ export async function registerHandler(req: Request, res: Response) {
   const username: string = req.body.username;
   const password: string = req.body.password;
   const email: string = req.body.email;
-  const name: string = req.body.name;
+  const firstName: string = req.body.firstName;
+  const lastName: string = req.body.lastName;
 
   try {
-    // checking if the sent credentials exists ot not
+    // checking if the sent credentials exists or not
     const user = await UserModel.find().or([
       { username: username },
       { email: email },
@@ -33,7 +34,8 @@ export async function registerHandler(req: Request, res: Response) {
 
     // creating a new User Document
     const newUser = new UserModel({
-      name: name,
+      firstName: firstName,
+      lastName: lastName,
       username: username,
       password: encryptedPassword,
       email: email,
