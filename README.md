@@ -6,6 +6,8 @@
 
 ![](/docs/naya-sketch.gif)
 
+Live Demo - [https://naya-sketch.up.railway.app/](https://naya-sketch.up.railway.app/)
+
 ---
 
 ### Table Of Contents
@@ -13,6 +15,7 @@
 - [Setup Local Development](#setup-local-development)
 - [API Documentation](#api-docs)
 - [Socket.IO Events Documentation](#socketio-events)
+- [Front-End Docs](#front-end-docs)
 - [References](#references)
 - [Video Demo](#youtube-video-demo---link)
 
@@ -112,6 +115,8 @@ npm run init
 - ["remove-user"](/docs/SOCKET_DOCS.md#remove-user)
 - ["update-user"](/docs/SOCKET_DOCS.md#update-user)
 - ["update-me"](/docs/SOCKET_DOCS.md#update-me)
+
+## [FRONT-END DOCS](/docs//FRONT_END.md)
 
 ## References
 
