@@ -89,6 +89,7 @@ const Canvas = () => {
         y2: e.data.global.y,
       };
       setPoints(points);
+      // sending drawn point to other users in room
       sendPoint(points);
       graphicsRef.current?.lineStyle(
         2,
@@ -215,7 +216,6 @@ const Canvas = () => {
       }),
       credentials: "include",
     });
-    //sendPoints(pointsToSend);
   };
 
   useEffect(() => {
@@ -331,30 +331,7 @@ const Canvas = () => {
         );
       }
     });
-    /*
-    state.socketClient?.on(
-      "get-points",
-      ({ collaboratorsPoints, username }) => {
-        if (username !== state.user?.username) {
-          for (var i = 0; i < collaboratorsPoints.length; i++) {
-            graphicsRef.current?.lineStyle(
-              2,
-              parseInt("0x" + state.collaborators[username]),
-              1
-            );
-            graphicsRef.current?.moveTo(
-              collaboratorsPoints[i].x1,
-              collaboratorsPoints[i].y1
-            );
-            graphicsRef.current?.lineTo(
-              collaboratorsPoints[i].x2,
-              collaboratorsPoints[i].y2
-            );
-          }
-        }
-      }
-    );
-*/
+
     // adding the user to state.currentOnline that joined the room
     state.socketClient?.on("add-user", ({ username }) => {
       dispatch({
@@ -395,16 +372,7 @@ const Canvas = () => {
     };
   }, [state.currentSketch]);
 
-  // sending drawn arc to connected socket-clients
-  /*
-const sendPoints = (pingPoints: any) => {
-    state.socketClient?.emit("send-points", {
-      points: pingPoints,
-      room: state.currentSketch,
-      username: state.user?.username,
-    });
-  };
-*/
+  // sending drawn point to connected socket-clients
   const sendPoint = (pingPoint: any) => {
     state.socketClient?.emit("send-point", {
       point: pingPoint,

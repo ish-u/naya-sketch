@@ -104,8 +104,8 @@ npm run init
 
 ## [SOCKET.IO EVENTS](/docs//SOCKET_DOCS.md)
 
-- ["send-points"](/docs/SOCKET_DOCS.md#send-points)
-- ["get-points"](/docs/SOCKET_DOCS.md#get-points)
+- ["send-point"](/docs/SOCKET_DOCS.md#send-point)
+- ["get-point"](/docs/SOCKET_DOCS.md#get-point)
 - ["join-room"](/docs/SOCKET_DOCS.md#join-room)
 - ["leave-room"](/docs/SOCKET_DOCS.md#leave-room)
 - ["connect"](./docs/SOCKET_DOCS.md#connect)

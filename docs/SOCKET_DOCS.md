@@ -4,8 +4,8 @@
 
 EVENTS:
 
-- ["send-points"](./SOCKET_DOCS.md#send-points)
-- ["get-points"](./SOCKET_DOCS.md#get-points)
+- ["send-point"](./SOCKET_DOCS.md#send-point)
+- ["get-point"](./SOCKET_DOCS.md#get-point)
 - ["join-room"](./SOCKET_DOCS.md#join-room)
 - ["leave-room"](./SOCKET_DOCS.md#leave-room)
 - ["connect"](./SOCKET_DOCS.md#connect)
@@ -18,14 +18,14 @@ EVENTS:
 
 ---
 
-### "send-points"
+### "send-point"
 
 - Sent by the Server to all the Connected Users in the room the event is emiited from.
 - Server Listens Clien Emits
 - Data
   ```json
   {
-      "points" : [{"x1":val,"y1":val, "x2":val, "y2":val}... array of point objects],
+      "point" : {"x1":val,"y1":val, "x2":val, "y2":val},
       "room": "room name/id on which user draws"
       "username" : "username of the user that has drawn the points on the room canvas"
   }
@@ -33,14 +33,14 @@ EVENTS:
 
 ---
 
-### "get-points"
+### "get-point"
 
 - All Clients connected to a room listens for this event and then draw on the Canavas
 - Server Emits Clients Listen
 - Data
   ```json
   {
-      "points" : [{"x1":val,"y1":val, "x2":val, "y2":val}... array of point objects],
+      "collaboratorsPoint" : {"x1":val,"y1":val, "x2":val, "y2":val},
       "username" : "username of user who has drawn points on the room canvas"
   }
   ```

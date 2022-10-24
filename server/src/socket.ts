@@ -41,13 +41,6 @@ io.on("connection", (socket) => {
     socket.to(room).emit("update-user", { username: username });
   });
 
-  socket.on("send-points", async ({ points, room, username }) => {
-    socket.to(room).emit("get-points", {
-      collaboratorsPoints: points,
-      username: username,
-    });
-  });
-
   socket.on("send-point", async ({ point, room, username }) => {
     socket.to(room).emit("get-point", {
       collaboratorsPoint: point,
