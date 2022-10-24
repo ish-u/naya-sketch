@@ -89,6 +89,7 @@ const Canvas = () => {
         y2: e.data.global.y,
       };
       setPoints(points);
+      sendPoint(points);
       graphicsRef.current?.lineStyle(
         2,
         state.user
@@ -214,7 +215,7 @@ const Canvas = () => {
       }),
       credentials: "include",
     });
-    sendPoints(pointsToSend);
+    //sendPoints(pointsToSend);
   };
 
   useEffect(() => {
@@ -313,6 +314,24 @@ const Canvas = () => {
   // Socket-IO -> For Live Collaborations
   useEffect(() => {
     // get points form other collaborators
+    state.socketClient?.on("get-point", ({ collaboratorsPoint, username }) => {
+      if (username !== state.user?.username) {
+        graphicsRef.current?.lineStyle(
+          2,
+          parseInt("0x" + state.collaborators[username]),
+          1
+        );
+        graphicsRef.current?.moveTo(
+          collaboratorsPoint.x1,
+          collaboratorsPoint.y1
+        );
+        graphicsRef.current?.lineTo(
+          collaboratorsPoint.x2,
+          collaboratorsPoint.y2
+        );
+      }
+    });
+    /*
     state.socketClient?.on(
       "get-points",
       ({ collaboratorsPoints, username }) => {
@@ -335,7 +354,7 @@ const Canvas = () => {
         }
       }
     );
-
+*/
     // adding the user to state.currentOnline that joined the room
     state.socketClient?.on("add-user", ({ username }) => {
       dispatch({
@@ -368,7 +387,8 @@ const Canvas = () => {
     });
 
     return () => {
-      state.socketClient?.off("get-points");
+      //state.socketClient?.off("get-points");
+      state.socketClient?.off("get-point");
       state.socketClient?.off("remove-user");
       state.socketClient?.off("add-user");
       state.socketClient?.off("update-user");
@@ -376,9 +396,18 @@ const Canvas = () => {
   }, [state.currentSketch]);
 
   // sending drawn arc to connected socket-clients
-  const sendPoints = (pingPoints: any) => {
+  /*
+const sendPoints = (pingPoints: any) => {
     state.socketClient?.emit("send-points", {
       points: pingPoints,
+      room: state.currentSketch,
+      username: state.user?.username,
+    });
+  };
+*/
+  const sendPoint = (pingPoint: any) => {
+    state.socketClient?.emit("send-point", {
+      point: pingPoint,
       room: state.currentSketch,
       username: state.user?.username,
     });

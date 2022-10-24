@@ -48,6 +48,13 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("send-point", async ({ point, room, username }) => {
+    socket.to(room).emit("get-point", {
+      collaboratorsPoint: point,
+      username: username,
+    });
+  });
+
   // create a new sketch
   socket.on("new-sketch", ({ sketchName, username }) => {
     //console.log(sketchName, username);
